@@ -23,7 +23,7 @@
 		<property name="driverClassName" value="${jdbc.driver}"></property>
 		<property name="url" value="${jdbc.url}"></property>
 		<property name="username" value="${jdbc.username}"></property>
-		<property name="password" value="${jdbc.password}"></property>
+		<property name="password" value="${jdbc.password}"/>
 		<property name="maxActive" value="30"></property>
 		<property name="maxIdle" value="5"></property>
 	</bean>

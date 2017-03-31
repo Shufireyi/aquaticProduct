@@ -3,9 +3,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:mvc="http://www.springframework.org/schema/mvc"
     xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:aop="http://www.springframework.org/schema/aop"
     xmlns:tx="http://www.springframework.org/schema/tx"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/mvc 
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd
@@ -20,10 +20,10 @@
 		对mybatis操作数据库的事务控制，spring使用jdbc的事务控制
 	 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<!-- 配置数据源 
+		<!-- 配置数据源
 			在 applicatonContext-dao配置过
 		-->
-		<property name="dataSource" ref="dataSource" ></property>
+		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
 	<!-- 通知 -->

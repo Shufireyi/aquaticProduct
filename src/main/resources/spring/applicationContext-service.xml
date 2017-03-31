@@ -17,5 +17,5 @@
     http://www.springframework.org/schema/tx/spring-tx.xsd"> 
 
 	<!-- 配置管理员的service -->
-	<!--<bean id="admService" class="com.fire.service.impl.AdmServiceImpl"></bean>-->
+	<bean id="userService" class="com.fire.service.impl.UserServiceImpl"/>
 </beans>

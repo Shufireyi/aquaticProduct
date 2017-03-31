@@ -38,19 +38,21 @@ public class UsersController {
         //user1.setPassword("chenliu");
         //user1.setPower(1);
         User rs = userService.findUserByNameAndPassword(user);
-        String isNull = null;
+        String isNull = "error";
         if (rs != null) {
             session.setAttribute("nowUser", rs.getUserName());
             isNull = "success";
+        } else {
+            isNull = "fail";
         }
         return isNull;
     }
 
 
     /**
-    * 功能描述：
-    * 用户退出
-    */
+     * 功能描述：
+     * 用户退出
+     */
     @RequestMapping(value = "userLogout")
     public String logout(HttpSession session) throws Exception {
         // 清除session

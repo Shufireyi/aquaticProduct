@@ -28,7 +28,7 @@ public class UsersController {
      * 功能描述：
      * 用户登录
      */
-    @RequestMapping(value = "/CheckLogin")
+    @RequestMapping(value = "CheckLogin")
     public
     @ResponseBody
     String CheckLogin(HttpSession session, User user) throws Exception {

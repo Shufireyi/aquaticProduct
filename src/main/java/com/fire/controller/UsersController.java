@@ -28,10 +28,10 @@ public class UsersController {
      * 功能描述：
      * 用户登录
      */
-    @RequestMapping(value = "CheckLogin")
+    @RequestMapping(value = "checklogin")
     public
     @ResponseBody
-    String CheckLogin(HttpSession session, User user) throws Exception {
+    String checkLogin(HttpSession session, User user) throws Exception {
         //测试用例
         //User user1 = new User();
         //user1.setUserName("chenliu");
@@ -41,6 +41,7 @@ public class UsersController {
         String isNull = "error";
         if (rs != null) {
             session.setAttribute("nowUser", rs.getUserName());
+            userService.updateUserTimeRecord(rs);
             isNull = "success";
         } else {
             isNull = "fail";
@@ -53,11 +54,29 @@ public class UsersController {
      * 功能描述：
      * 用户退出
      */
-    @RequestMapping(value = "userLogout")
+    @RequestMapping(value = "logout")
     public String logout(HttpSession session) throws Exception {
         // 清除session
         session.invalidate();
         return "redirect:../index.html";
+    }
+
+    /**
+     * 功能描述：
+     * 用户注册
+     */
+    @RequestMapping(value = "register")
+    public
+    @ResponseBody
+    String register(User user) throws Exception {
+        int rs = userService.register(user);
+        String isNull = "error";
+        if (rs == 1) {
+            isNull = "success";
+        } else {
+            isNull = "fail";
+        }
+        return isNull;
     }
 
 

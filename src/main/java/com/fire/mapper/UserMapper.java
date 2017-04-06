@@ -12,8 +12,14 @@ import com.fire.po.User;
 
 public interface UserMapper {
     /**
-    * 功能描述：
-    * 用户登录
-    */
+     * 功能描述：
+     * 用户登录mapper接口
+     */
     User findUserByNameAndPassword(User user) throws Exception;
+
+    /**
+     * 功能描述：
+     * 用户注册mapper接口
+     */
+    int register(User user) throws Exception;
 }

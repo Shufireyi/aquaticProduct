@@ -1,7 +1,7 @@
 package com.fire.service.impl;
 
 import com.fire.mapper.UserMapper;
-import com.fire.po.User;
+import com.fire.pojo.User;
 import com.fire.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 

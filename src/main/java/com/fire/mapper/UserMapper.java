@@ -1,6 +1,6 @@
 package com.fire.mapper;
 
-import com.fire.po.User;
+import com.fire.pojo.User;
 
 import java.util.Map;
 

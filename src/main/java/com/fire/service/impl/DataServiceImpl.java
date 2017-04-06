@@ -1,7 +1,7 @@
 package com.fire.service.impl;
 
 import com.fire.mapper.DataMapper;
-import com.fire.po.ShuichanData;
+import com.fire.pojo.ShuichanData;
 import com.fire.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 

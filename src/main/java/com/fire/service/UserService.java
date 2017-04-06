@@ -1,6 +1,6 @@
 package com.fire.service;
 
-import com.fire.po.User;
+import com.fire.pojo.User;
 
 /**
  * Created by ShuFire

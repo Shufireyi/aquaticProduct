@@ -1,6 +1,6 @@
 package com.fire.controller;
 
-import com.fire.po.Pound;
+import com.fire.pojo.Pound;
 import com.fire.service.PoundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

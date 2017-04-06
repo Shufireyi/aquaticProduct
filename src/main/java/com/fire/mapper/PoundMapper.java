@@ -1,6 +1,6 @@
 package com.fire.mapper;
 
-import com.fire.po.Pound;
+import com.fire.pojo.Pound;
 
 import java.util.List;
 

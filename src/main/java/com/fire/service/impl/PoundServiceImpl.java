@@ -1,7 +1,7 @@
 package com.fire.service.impl;
 
 import com.fire.mapper.PoundMapper;
-import com.fire.po.Pound;
+import com.fire.pojo.Pound;
 import com.fire.service.PoundService;
 import org.springframework.beans.factory.annotation.Autowired;
 

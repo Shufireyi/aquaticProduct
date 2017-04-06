@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fire.mapper.DataMapper">
 
-    <select id="queryHistoryDataByPage" parameterType="java.util.Map" resultType="com.fire.po.ShuichanData">
+    <select id="queryHistoryDataByPage" parameterType="java.util.Map" resultType="com.fire.pojo.ShuichanData">
         SELECT * FROM ShuichanData
         <where>
             <if test="util.comid != null">

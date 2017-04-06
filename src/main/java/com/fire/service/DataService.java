@@ -1,6 +1,6 @@
 package com.fire.service;
 
-import com.fire.po.ShuichanData;
+import com.fire.pojo.ShuichanData;
 
 import java.util.List;
 import java.util.Map;

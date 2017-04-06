@@ -9,7 +9,7 @@
     <!-- 配置别名 -->
     <typeAliases>
         <!-- 批量扫描别名 -->
-        <package name="com.fire.po"/>
+        <package name="com.fire.pojo"/>
     </typeAliases>
 
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fire.mapper.PoundMapper">
 
-    <resultMap id="PoundMapping" type="com.fire.po.Pound">
+    <resultMap id="PoundMapping" type="com.fire.pojo.Pound">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="pond_name" jdbcType="VARCHAR" property="poundName"/>
         <result column="province" jdbcType="VARCHAR" property="province"/>
@@ -37,7 +37,7 @@
         WHERE user_id=#{userId}
     </select>
 
-    <insert id="addPound" parameterType="com.fire.po.Pound">
+    <insert id="addPound" parameterType="com.fire.pojo.Pound">
         INSERT INTO pond_info(
         id,pond_name,province,city,
         country,address,longitude,latitude,pond_length,
@@ -56,7 +56,7 @@
         WHERE id=#{id}
     </delete>
 
-    <update id="updatePound" parameterType="com.fire.po.Pound">
+    <update id="updatePound" parameterType="com.fire.pojo.Pound">
         UPDATE pond_info
         <set>
             <if test="pondName!=null">
@@ -117,7 +117,7 @@
         where id=#{id}
     </update>
 
-    <select id="queryPound" resultType="com.fire.po.Pound">
+    <select id="queryPound" resultType="com.fire.pojo.Pound">
         SELECT *
         FROM pond_info
     </select>

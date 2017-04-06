@@ -2,7 +2,7 @@ package com.fire.controller;
 
 import com.fire.entity.HistoryDateUtil;
 import com.fire.entity.Page;
-import com.fire.po.ShuichanData;
+import com.fire.pojo.ShuichanData;
 import com.fire.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

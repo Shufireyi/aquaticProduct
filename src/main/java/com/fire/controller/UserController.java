@@ -1,6 +1,6 @@
 package com.fire.controller;
 
-import com.fire.po.User;
+import com.fire.pojo.User;
 import com.fire.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

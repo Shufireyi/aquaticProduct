@@ -9,17 +9,18 @@ import java.util.List;
  */
 public interface PoundMapper {
     //通过用户名查询用户ID
-    public int findIdByUsername(String userName)throws Exception;
+    int findIdByUsername(String userName) throws Exception;
+
     //通过用户ID查询出所拥有的鱼塘list集合
-    public List<Pound> queryPoundByUserId(int userId)throws Exception;
+    List<Pound> queryPoundByUserId(int userId) throws Exception;
 
     //鱼塘的增删改查功能
-    public void addPound(Pound pound)throws Exception;
+    void addPound(Pound pound) throws Exception;
 
-    public void deletePound(int id)throws Exception;
+    void deletePound(int id) throws Exception;
 
-    public void updatePound(Pound pound)throws Exception;
+    void updatePound(Pound pound) throws Exception;
 
-    public List<Pound> queryPound()throws Exception;
+    List<Pound> queryPound() throws Exception;
 
 }

@@ -86,4 +86,9 @@
         UPDATE user SET login_time = #{loginTime}, last_login_time = #{lastLoginTime},count = ${count}
         WHERE id = ${id}
     </update>
+
+    <update id="changePassword" parameterType="java.util.Map">
+        update user set password = #{newPassword}
+        where id= ${uid}
+    </update>
 </mapper>

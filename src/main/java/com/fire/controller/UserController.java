@@ -21,7 +21,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping(value = "/user")
-public class UsersController {
+public class UserController {
 
     @Autowired
     private UserService userService;
@@ -100,18 +100,21 @@ public class UsersController {
      * 功能描述：
      * 用户修改密码
      */
-    //@RequestMapping(value = "changePassword")
-    //public
-    //@ResponseBody
-    //String changePassword(User user, String newPassword) throws Exception {
-    //    int rs = userMapper.changePassword(user, newPassword);
-    //    String isNull = "error";
-    //    if (rs == 1) {
-    //        isNull = "success";
-    //    } else {
-    //        isNull = "fail";
-    //    }
-    //    return isNull;
-    //}
+    @RequestMapping(value = "changePassword")
+    public
+    @ResponseBody
+    String changePassword(User user, String newPassword) throws Exception {
+        //User user1 = new User();
+        //user1.setId(13);
+        //String qwe = "qweqwe";
+        int rs = userService.changePassword(user, newPassword);
+        String isNull = "error";
+        if (rs == 1) {
+            isNull = "success";
+        } else {
+            isNull = "fail";
+        }
+        return isNull;
+    }
 
 }

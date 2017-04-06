@@ -28,4 +28,11 @@ public interface UserService {
      * 用户注册接口
      */
     int register(User user) throws Exception;
+
+    /**
+     * 功能描述：
+     * 用户修改密码接口
+     */
+
+    int changePassword(User user, String newPassword) throws Exception;
 }

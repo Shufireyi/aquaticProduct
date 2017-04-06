@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ShuFire
  * on 2017/3/31.
  * e-mail：102338496@qq.com
  * 内容说明：
+ * UserService实现类
  */
 
 
@@ -46,5 +49,12 @@ public class UserServiceImpl implements UserService {
 
     public int register(User user) throws Exception {
         return userMapper.register(user);
+    }
+
+    public int changePassword(User user, String newPassword) throws Exception {
+        Map<String,Object> temp = new HashMap<String,Object>();
+        temp.put("uid",user.getId());
+        temp.put("newPassword",newPassword);
+        return userMapper.changePassword(temp);
     }
 }

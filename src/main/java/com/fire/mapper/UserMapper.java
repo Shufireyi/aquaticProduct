@@ -2,6 +2,8 @@ package com.fire.mapper;
 
 import com.fire.po.User;
 
+import java.util.Map;
+
 /**
  * Created by ShuFire
  * on 2017/3/31.
@@ -28,4 +30,10 @@ public interface UserMapper {
      * 用户注册mapper接口
      */
     int register(User user) throws Exception;
+
+    /**
+     * 功能描述：
+     * 用户密码修改的mapper接口
+     */
+    int changePassword(Map<String, Object> temp) throws Exception;
 }

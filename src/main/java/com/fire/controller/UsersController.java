@@ -71,26 +71,22 @@ public class UsersController {
     public
     @ResponseBody
     String register(User user) throws Exception {
-        /**
-         * 设置注册时间
-         */
-        //Date nDate = new Date();
-        //user.setCreateTime(nDate);
-        //System.out.println(nDate);
+
+        // 设置注册时间
         DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String nowTime = format1.format(new Date());
-        //System.out.println(nowTime);
 
-        User user1 = new User();
-        user1.setUserName("shufangyi");
-        user1.setPassword("shufangyi");
-        user1.setPersonName("shufnagyi");
-        user1.setPower(1);
-        user1.setTel("13151562908");
-        user1.setEmail("102338496@qq.com");
-        user1.setEnterpriseName("南区10栋");
-        user1.setCreateTime(nowTime);
-        int rs = userService.register(user1);
+        //User user1 = new User();
+        //user1.setUserName("shufangyi");
+        //user1.setPassword("shufangyi");
+        //user1.setPersonName("shufnagyi");
+        //user1.setPower(1);
+        //user1.setTel("13151562908");
+        //user1.setEmail("102338496@qq.com");
+        //user1.setEnterpriseName("南区10栋");
+        //user1.setCreateTime(nowTime);
+        user.setCreateTime(nowTime);
+        int rs = userService.register(user);
         String isNull = "error";
         if (rs == 1) {
             isNull = "success";
@@ -100,5 +96,22 @@ public class UsersController {
         return isNull;
     }
 
+    /**
+     * 功能描述：
+     * 用户修改密码
+     */
+    //@RequestMapping(value = "changePassword")
+    //public
+    //@ResponseBody
+    //String changePassword(User user, String newPassword) throws Exception {
+    //    int rs = userMapper.changePassword(user, newPassword);
+    //    String isNull = "error";
+    //    if (rs == 1) {
+    //        isNull = "success";
+    //    } else {
+    //        isNull = "fail";
+    //    }
+    //    return isNull;
+    //}
 
 }

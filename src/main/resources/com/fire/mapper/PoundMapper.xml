@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fire.mapper.PoundMapper">
+<resultMap id="PoundMapping" type="com.fire.po.Pound">
+    <id column="id" jdbcType="INT" property="id"/>
+    <result column="pond_name" jdbcType="VARCHAR" property="poundName"/>
+    <result column="province" jdbcType="VARCHAR" property="province"/>
+    <result column="city" jdbcType="VARCHAR" property="city"/>
+    <result column="country" jdbcType="VARCHAR" property="country"/>
+    <result column="address" jdbcType="VARCHAR" property="address"/>
+    <result column="longitude" jdbcType="VARCHAR" property="longitude"/>
+    <result column="latitude" jdbcType="VARCHAR" property="latitude"/>
+    <result column="pond_length" jdbcType="DOUBLE" property="poundLength"/>
+    <result column="pond_width" jdbcType="DOUBLE" property="poundWidth"/>
+    <result column="pond_deep" jdbcType="DOUBLE" property="poundDeep"/>
+    <result column="pond_area" jdbcType="DOUBLE" property="poundArea"/>
+    <result column="person_name" jdbcType="VARCHAR" property="personName"/>
+    <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+    <result column="user_id" jdbcType="INT" property="userId"/>
+    <result column="enterprise_name" jdbcType="VARCAHR" property="enterpriseName"/>
+    <result column="tel" jdbcType="VARCHAR" property="tel"/>
+    <result column="email" jdbcType="VARCHAR" property="email"/>
+    <result column="create_time" jdbcType="DATETIME" property="createTime"/>
+    <result column="update_time" jdbcType="DATETIME" property="updateTime"/>
+</resultMap>
+
+    <select id="findIdByUsername" parameterType="String" resultType="int">
+        SELECT id
+        FROM user
+        WHERE user_name=#{userName}
+
+    </select>
+    <select id="queryPoundByUserId" parameterType="int" resultType="PoundMapping">
+        SELECT *
+        FROM pond_info
+        WHERE user_id=#{userId}
+    </select>
+
+    <insert id="addPound" parameterType="com.fire.po.Pound">
+        INSERT INTO pond_info(
+          id,pond_name,province,city,
+          country,address,longitude,latitude,pond_length,
+          pond_width,pond_deep,pond_area,person_name,user_name,
+          user_id,enterprise_name,tel,email,create_time,update_time
+        )
+        VALUES (
+          #{id},#{pondName},#{province},#{city},
+          #{country},#{address},#{longitude},#{latitude},#{pondLength},
+          #{pondWidth},#{pondDeep},#{pondArea},#{personName},#{userName},
+          #{userId},#{enterpriseName},#{tel},#{email},#{createTime},#{updateTime}
+        )
+    </insert>
+    <delete id="deletePound" parameterType="int" >
+        DELETE FROM pond_info
+        WHERE id=#{id}
+    </delete>
+
+    <update id="updatePound" parameterType="com.fire.po.Pound">
+        UPDATE pond_info
+        <set>
+            <if test="pondName!=null">
+                pond_name=#{pondName},
+            </if>
+            <if test="province!=null">
+                province=#{province},
+            </if>
+            <if test="city!=null">
+                city=#{city},
+            </if>
+            <if test="country!=null">
+                country=#{country},
+            </if>
+            <if test="address!=null">
+                address=#{address},
+            </if>
+            <if test="longitude!=null">
+                longitude=#{longitude},
+            </if>
+            <if test="latitude!=null">
+                latitude=#{latitude},
+            </if>
+            <if test="pondLength!=null">
+                pond_length=#{pondLength},
+            </if>
+            <if test="pondWidth!=null">
+                pond_width=#{pondWidth},
+            </if>
+            <if test="pondDeep!=null">
+                pond_deep=#{pondDeep},
+            </if>
+            <if test="pondArea!=null">
+                pond_area=#{pondArea},
+            </if>
+            <if test="personName!=null">
+                person_name=#{personName},
+            </if>
+            <if test="userName!=null">
+                user_name=userName,
+            </if>
+            <if test="enterpriseName!=null">
+                enterprise_name=#{enterpriseName},
+            </if>
+            <if test="tel!=null">
+                tel=#{tel},
+            </if>
+            <if test="email!=null">
+                email=#{email},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="queryPound" resultType="com.fire.po.Pound">
+        SELECT *
+        FROM pond_info
+    </select>
+
+</mapper>

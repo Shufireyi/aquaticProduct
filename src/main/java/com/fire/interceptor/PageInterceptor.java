@@ -1,7 +1,7 @@
 package com.fire.interceptor;
 
 
-import com.fire.po.Page;
+import com.fire.entity.Page;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;

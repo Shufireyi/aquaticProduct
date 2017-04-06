@@ -19,4 +19,5 @@
     <!-- 配置管理员的service -->
     <bean id="userService" class="com.fire.service.impl.UserServiceImpl"/>
     <bean id="dataService" class="com.fire.service.impl.DataServiceImpl"/>
+    <bean id="poundService" class="com.fire.service.impl.PoundServiceImpl"/>
 </beans>

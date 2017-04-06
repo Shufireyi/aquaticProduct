@@ -1,4 +1,4 @@
-package com.fire.po;
+package com.fire.entity;
 
 /**
  * Created by ShuFire

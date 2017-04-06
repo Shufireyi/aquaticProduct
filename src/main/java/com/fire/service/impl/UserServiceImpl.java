@@ -17,7 +17,7 @@ import java.util.Date;
  */
 
 
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -26,6 +26,10 @@ public class UserServiceImpl implements UserService{
         return userMapper.findUserByNameAndPassword(user);
     }
 
+    /**
+     * 功能描述：
+     * 登录时 更新登录时间、上次登录时间、登陆次数
+     */
     public int updateUserLoginRecord(User user) throws Exception {
         //接着这里写，用户登录的时候更新登陆次数和时间
         String lastLoginTime = user.getLoginTime();
@@ -36,11 +40,11 @@ public class UserServiceImpl implements UserService{
         user.setLoginTime(loginTime);
 
         int count = user.getCount();
-        user.setCount(count+1);
+        user.setCount(count + 1);
         return userMapper.updateUserLoginRecord(user);
     }
 
-    public int register(User user) throws Exception{
+    public int register(User user) throws Exception {
         return userMapper.register(user);
     }
 }

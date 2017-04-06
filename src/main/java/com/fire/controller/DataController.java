@@ -1,7 +1,7 @@
 package com.fire.controller;
 
-import com.fire.po.HistoryDateUtil;
-import com.fire.po.Page;
+import com.fire.entity.HistoryDateUtil;
+import com.fire.entity.Page;
 import com.fire.po.ShuichanData;
 import com.fire.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,24 +29,29 @@ public class DataController {
     @Autowired
     private DataService dataService;
 
+    /**
+     * 功能描述：
+     * 分页查询鱼塘历史数据
+     */
     @RequestMapping(value = "queryHistoryDataByPage")
     public
     @ResponseBody
-    List<ShuichanData> queryHistoryDataByPage(HistoryDateUtil historyDateUtil, Page page) throws Exception {
+    Map<String, Object> queryHistoryDataByPage(HistoryDateUtil historyDateUtil, Page page) throws Exception {
         Map<String, Object> parameter = new HashMap<String, Object>();
-        HistoryDateUtil historyDateUtil1 = new HistoryDateUtil();
-        Page page1 = new Page();
-        page1.setCurrentPage(1);
-        historyDateUtil1.setComid("2");
-        historyDateUtil1.setFacid("1");
-        historyDateUtil1.setType("ph");
-        //historyDateUtil1.setStartDate("2017-01-19");
-        historyDateUtil1.setStartTime("2017-01-19 0:0:0");
-        //historyDateUtil1.setEndDate("2017-01-20");
-        historyDateUtil1.setEndTime("2017-01-20 23:0:0");
-        parameter.put("util", historyDateUtil1);
-        parameter.put("page", page1);
+        //HistoryDateUtil historyDateUtil1 = new HistoryDateUtil();
+        //Page page1 = new Page();
+        //page1.setCurrentPage(1);
+        //historyDateUtil1.setComid("2");
+        //historyDateUtil1.setFacid("1");
+        //historyDateUtil1.setType("ph");
+        //historyDateUtil1.setStartTime("2017-01-19 0:0:0");
+        //historyDateUtil1.setEndTime("2017-01-20 23:0:0");
+        parameter.put("util", historyDateUtil);
+        parameter.put("page", page);
         List<ShuichanData> list = dataService.queryHistoryDataByPage(parameter);
-        return list;
+        Map<String,Object> returnValue = new HashMap<String,Object>();
+        returnValue.put("list",list);
+        returnValue.put("page",page);
+        return returnValue;
     }
 }

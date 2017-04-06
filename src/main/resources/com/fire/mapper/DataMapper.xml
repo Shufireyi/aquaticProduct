@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fire.mapper.DataMapper">
+
+    <select id="queryHistoryDataByPage" parameterType="java.util.Map" resultType="com.fire.po.ShuichanData">
+        SELECT * FROM ShuichanData
+        <where>
+            <if test="util.comid != null">
+                and companyid = ${util.comid}
+            </if>
+            <if test="util.facid != null">
+                and factoryid = ${util.facid}
+            </if>
+            <if test="util.type != null and !&quot;&quot;.equals(util.type.trim())">
+                and type LIKE '%${util.type}%'
+            </if>
+            <if test="util.startTime != null and !&quot;&quot;.equals(util.startTime.trim())
+                and util.endTime != null and !&quot;&quot;.equals(util.endTime.trim())">
+                and time BETWEEN '${util.startTime}' AND '${util.endTime}'
+            </if>
+        </where>
+        order by id
+    </select>
+
+</mapper>

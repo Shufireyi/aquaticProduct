@@ -81,4 +81,9 @@
         </trim>
 
     </insert>
+
+    <update id="updateUserLoginRecord" parameterType="com.fire.po.User">
+        UPDATE user SET login_time = #{loginTime}, last_login_time = #{lastLoginTime},count = ${count}
+        WHERE id = ${id}
+    </update>
 </mapper>

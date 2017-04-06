@@ -51,7 +51,7 @@
 		</property>
 	</bean> -->
 	
-	<!-- 拦截器 -->
+	 <!--拦截器 -->
 	<!--<mvc:interceptors>-->
 		<!--&lt;!&ndash; 多个拦截器顺序执行 &ndash;&gt;-->
 		<!--<mvc:interceptor>-->

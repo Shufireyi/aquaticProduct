@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by ShuFire
@@ -32,16 +35,15 @@ public class UsersController {
     public
     @ResponseBody
     String checkLogin(HttpSession session, User user) throws Exception {
-        //测试用例
-        //User user1 = new User();
-        //user1.setUserName("chenliu");
-        //user1.setPassword("chenliu");
-        //user1.setPower(1);
-        User rs = userService.findUserByNameAndPassword(user);
+        User user1 = new User();
+        user1.setUserName("shufangyi");
+        user1.setPassword("shufangyi");
+        user1.setPower(1);
+        User rs = userService.findUserByNameAndPassword(user1);
         String isNull = "error";
         if (rs != null) {
             session.setAttribute("nowUser", rs.getUserName());
-            userService.updateUserTimeRecord(rs);
+            userService.updateUserLoginRecord(rs);
             isNull = "success";
         } else {
             isNull = "fail";
@@ -69,7 +71,26 @@ public class UsersController {
     public
     @ResponseBody
     String register(User user) throws Exception {
-        int rs = userService.register(user);
+        /**
+         * 设置注册时间
+         */
+        //Date nDate = new Date();
+        //user.setCreateTime(nDate);
+        //System.out.println(nDate);
+        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String nowTime = format1.format(new Date());
+        //System.out.println(nowTime);
+
+        User user1 = new User();
+        user1.setUserName("shufangyi");
+        user1.setPassword("shufangyi");
+        user1.setPersonName("shufnagyi");
+        user1.setPower(1);
+        user1.setTel("13151562908");
+        user1.setEmail("102338496@qq.com");
+        user1.setEnterpriseName("南区10栋");
+        user1.setCreateTime(nowTime);
+        int rs = userService.register(user1);
         String isNull = "error";
         if (rs == 1) {
             isNull = "success";

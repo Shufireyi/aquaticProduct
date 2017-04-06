@@ -21,7 +21,7 @@ public interface UserService {
      * 功能描述：
      * 更新用户登录的时间以及登录的总次数
      */
-    int updateUserTimeRecord(User user) throws Exception;
+    int updateUserLoginRecord(User user) throws Exception;
 
     /**
      * 功能描述：

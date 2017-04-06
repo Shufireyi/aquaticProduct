@@ -1,7 +1,5 @@
 package com.fire.po;
 
-import java.util.Date;
-
 /**
  * Created by ShuFire
  * on 2017/3/31.
@@ -20,9 +18,9 @@ public class User {
     private String tel;
     private String email;
     private String enterpriseName;
-    private Date createTime;
-    private Date loginTime;
-    private Date lastLoginTime;
+    private String createTime;
+    private String loginTime;
+    private String lastLoginTime;
     private int count;
 
     public int getId() {
@@ -89,27 +87,27 @@ public class User {
         this.enterpriseName = enterpriseName;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getLoginTime() {
+    public String getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(Date loginTime) {
+    public void setLoginTime(String loginTime) {
         this.loginTime = loginTime;
     }
 
-    public Date getLastLoginTime() {
+    public String getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(Date lastLoginTime) {
+    public void setLastLoginTime(String lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 

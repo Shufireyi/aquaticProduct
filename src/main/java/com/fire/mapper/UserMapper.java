@@ -19,6 +19,12 @@ public interface UserMapper {
 
     /**
      * 功能描述：
+     * 更新用户的登录时间和登录次数
+     */
+    int updateUserLoginRecord(User user) throws Exception;
+
+    /**
+     * 功能描述：
      * 用户注册mapper接口
      */
     int register(User user) throws Exception;

@@ -8,7 +8,9 @@
 		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
 		<style type="text/css">
-			.pagination{float: right;}
+			ul { cursor: pointer;}
+			
+			.pagination { float: right;}
 		</style>
 	</head>
 	<body>
@@ -33,28 +35,44 @@
 					<td>560001</td>
 					<td>560001</td>
 				</tr>
+				<tr>
+					<td>Tanmay</td>
+					<td>Bangalore</td>
+					<td>560001</td>
+					<td>560001</td>
+					<td>560001</td>
+					<td>560001</td>
+				</tr>
+				<tr>
+					<td>Tanmay</td>
+					<td>Bangalore</td>
+					<td>560001</td>
+					<td>560001</td>
+					<td>560001</td>
+					<td>560001</td>
+				</tr>
 			</tbody>
 		</table>		
 		<ul class="pagination" id="pagination">
 		    <li><a onclick="listPagel()">&laquo;</a></li>
-		    <li><a onclick="listPage1(1)">1</a></li>
-		    <li><a onclick="listPage2(2)">2</a></li>
-		    <li><a onclick="listPage3(3)">3</a></li>
-		    <li><a onclick="listPage4(4)">4</a></li>
-		    <li><a onclick="listPage5(5)">5</a></li>
+		    <li><a onclick="listPage(1,1)">1</a></li>
+		    <li><a onclick="listPage(2,2)">2</a></li>
+		    <li><a onclick="listPage(3,3)">3</a></li>
+		    <li><a onclick="listPage(4,4)">4</a></li>
+		    <li><a onclick="listPage(5,5)">5</a></li>
 		    <li><a onclick="listPager()">&raquo;</a></li>
 		</ul>
 	</body>
 	<script>
 
 		var nowpage = 1;
-		var n=0;
+		var n = 1;
 		var totalpage = 30;
 		var ul = document.getElementById("pagination");
 		ul.children[1].children[0].style.backgroundColor = " #ddd";    //默认显示第一页
 
 		list(1);
-        alert("1");
+
 		function list(page){
 			$.ajax({
 				type:"post",
@@ -63,24 +81,27 @@
 					currentPage:page			
 				},
 				success:function(returnValue){
-                    alert("1");
+                    totalpage = returnValue.page.totalPage;
+                    var item = returnValue.list;
+                    for(var i=0;i<3;i++){
+//                        alert(item[i].value);
+                        var tbody = document.getElementById("tb");
+                        var tr = document.createElement("tr");
+                        tbody.appendChild(tr);
 
-                    var obj = returnValue;
-					$.each(obj, function(index,item) {
-						var tbody = document.getElementById("tb");
-						var tr = document.createElement("tr");
-						tbody.appendChild(tr);
-						alert(item);
-
-						addtd(item.list.companyid,tr);
-						addtd(item.list.factoryid,tr);
-						addtd(item.list.sensorid,tr);
-						addtd(item.list.type,tr);
-						addtd(item.list.value,tr);
-						addtd(getDateTime(item.list.time),tr);
-						totalpage = item.page.totalPage;
-						
-					});
+//                        addtd(item[i].companyid, tr);
+//                        addtd(item[i].factoryid, tr);
+//                        addtd(item[i].sensorid, tr);
+//                        addtd(item[i].type, tr);
+//                        addtd(item[i].value, tr);
+//                        addtd(item[i].time, tr);
+                        document.getElementById("tb").children[i].children[0].innerHTML = item[i].companyid;
+                        document.getElementById("tb").children[i].children[1].innerHTML = item[i].factoryid;
+                        document.getElementById("tb").children[i].children[2].innerHTML = item[i].sensorid;
+                        document.getElementById("tb").children[i].children[3].innerHTML = item[i].type;
+                        document.getElementById("tb").children[i].children[4].innerHTML = item[i].value;
+                        document.getElementById("tb").children[i].children[5].innerHTML = item[i].time;
+                    }
 				}
 			});
 		}
@@ -100,122 +121,75 @@
 			    var ss = date.getSeconds();
 			    return year + "-" + month + "-" + day+" "+hh+":"+mm+":"+ss; 
 		}
+		
+		//分页功能
+		function listPage(page,flag){                          //flag为位置标记
+			if(page >0 && page <= totalpage){
+				var ul = document.getElementById("pagination");
+				//$('#tb tr').remove();
+				for(var i=1;i<6;i++){
+					ul.children[i].children[0].style.backgroundColor = "white";  
+				}
 
-		function listPage1(page){
-			if(page > 0){
-			var ul = document.getElementById("pagination");
-			$('#tb tr').remove();
-			for(var i=1;i<6;i++){
-				ul.children[i].children[0].style.backgroundColor = "white"; 
-			}
-			if(document.getElementById("pagination").children[1].children[0].innerHTML == 1){
-			ul.children[1].children[0].style.backgroundColor = " #ddd"; 
-				
-			}else{
-			ul.children[2].children[0].style.backgroundColor = " #ddd"; }
-			if(page != 1){
-				for(var i=1;i<6;i++){
-					ul.children[i].children[0].setAttribute("onclick","listPage"+i+"("+(page+i-2)+")");
-					ul.children[i].children[0].innerHTML = page+i-2;
+				if(flag >=2 && flag <=4){	
+					ul.children[flag].children[0].style.backgroundColor = " #ddd"; //选中为灰色
+					nowpage = page;
+					n = flag;
+				}else if(flag == 1){
+						if(document.getElementById("pagination").children[1].children[0].innerHTML == 1){
+							ul.children[1].children[0].style.backgroundColor = " #ddd"; 
+						}else{
+							ul.children[2].children[0].style.backgroundColor = " #ddd";
+						}
+						if(page != 1){
+							for(var i=1;i<6;i++){
+								ul.children[i].children[0].setAttribute("onclick","listPage("+(page+i-2)+","+i+")");
+								ul.children[i].children[0].innerHTML = page+i-2;
+							}
+						}
+						nowpage = page;
+						if(page == 1){ 
+							n = flag;
+						}else{
+							n = flag+1;
+						}
+				}else if(flag == 5){
+						if(document.getElementById("pagination").children[5].children[0].innerHTML == totalpage){
+							ul.children[5].children[0].style.backgroundColor = " #ddd"; 
+						}else{
+							ul.children[4].children[0].style.backgroundColor = " #ddd"; 
+						}
+						if(page < totalpage){
+							for(var i=1;i<6;i++){
+								ul.children[i].children[0].setAttribute("onclick","listPage("+(page+i-4)+","+i+")");
+								ul.children[i].children[0].innerHTML = page+i-4;
+							}
+						}
+						nowpage = page;
+						if(page == totalpage){
+							n = flag;							
+						}else{
+							n = flag-1;
+						}
 				}
-			}
-			nowpage = page;
-			n = 2;
-			}
-			list(page);
-		}
-		function listPage2(page){
-			var ul = document.getElementById("pagination");
-			$('#tb tr').remove();
-			for(var i=1;i<6;i++){
-				ul.children[i].children[0].style.backgroundColor = "white"; 
-			}
-			ul.children[2].children[0].style.backgroundColor = " #ddd"; 
-			nowpage = page;
-			n = 2;
-			list(page);
-		}
-		function listPage3(page){
-			var ul = document.getElementById("pagination");
-			$('#tb tr').remove();
-			for(var i=1;i<6;i++){
-				ul.children[i].children[0].style.backgroundColor = "white"; 
-			}
-			
-			ul.children[3].children[0].style.backgroundColor = " #ddd"; 			
-			nowpage = page;
-			n=3;
-			list(page);
-		}
-		function listPage4(page){
-			var ul = document.getElementById("pagination");
-			$('#tb tr').remove();
-			for(var i=1;i<6;i++){
-				ul.children[i].children[0].style.backgroundColor = "white"; 
-			}
-			
-			ul.children[4].children[0].style.backgroundColor = " #ddd";
-			nowpage = page;
-			n=4;
-			list(page);
-		}
-		function listPage5(page){
-			if(page <= totalpage){
-			var ul = document.getElementById("pagination");
-			$('#tb tr').remove();
-			for(var i=1;i<6;i++){
-				ul.children[i].children[0].style.backgroundColor = "white"; 
-			}
-			
-			if(document.getElementById("pagination").children[5].children[0].innerHTML == totalpage){
-				ul.children[5].children[0].style.backgroundColor = " #ddd"; 
-			}else{
-			ul.children[4].children[0].style.backgroundColor = " #ddd"; }			
-			if(nowpage < totalpage){
-				for(var i=1;i<6;i++){
-					ul.children[i].children[0].setAttribute("onclick","listPage"+i+"("+(page+i-4)+")");
-					ul.children[i].children[0].innerHTML = page+i-4;
-				}
-			}
-			nowpage = page;
-			n = 4;
-			list(page);
+				list(page);
 			}
 		}
 		
 		function listPagel(){
-			//alert(n);
-			if( n == 1){
-				listPage1(nowpage-1);
-			}else if ( n == 2){
-				listPage1(nowpage-1);
-			}else if( n == 3){
-				listPage2(nowpage-1);
-			}else if( n == 4){
-				listPage3(nowpage-1);				
-			}else if (n == 5){
-				listPage3(nowpage-1);				
+			if(n == 1){
+				listPage(nowpage-1,n);
 			}else{
-				
+				listPage(nowpage-1,n-1);
 			}
-			
 		}
+		
 		function listPager(){
-			if( n == 1){
-				listPage2(nowpage+1);
-			}else if ( n == 2){
-				listPage3(nowpage+1);
-			}else if( n == 3){
-				listPage4(nowpage+1);
-			}else if( n == 4){
-				listPage5(nowpage+1);				
-			}else if (n == 5){
-				listPage5(nowpage+1);				
+			if(n == 5){
+				listPage(nowpage+1,n);
 			}else{
-				
-			}			
+				listPage(nowpage+1,n+1);
+			}
 		}
-		
-		
 	</script>
 </html>

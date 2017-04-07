@@ -27,7 +27,7 @@ public class Page {
     /**
      * 每一页显示的条数
      */
-    private int pageNumber = 3;
+    private int pageNumber = 10;
 
     /**
      * 数据库中limit的参数，从第几条开始取

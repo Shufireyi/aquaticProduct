@@ -57,10 +57,13 @@ public class UserController {
      * 用户退出
      */
     @RequestMapping(value = "logout")
-    public String logout(HttpSession session) throws Exception {
+    public
+    @ResponseBody
+    String logout(HttpSession session) throws Exception {
         // 清除session
         session.invalidate();
-        return "redirect:../index.html";
+        String isNull="success";
+        return isNull;
     }
 
     /**

@@ -89,6 +89,6 @@
 
     <update id="changePassword" parameterType="java.util.Map">
         update user set password = #{newPassword}
-        where id= ${uid}
+        where user_name= ${userName}
     </update>
 </mapper>

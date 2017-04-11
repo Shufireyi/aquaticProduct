@@ -35,11 +35,11 @@ public class UserController {
     public
     @ResponseBody
     String checkLogin(HttpSession session, User user) throws Exception {
-        User user1 = new User();
-        user1.setUserName("shufangyi");
-        user1.setPassword("shufangyi");
-        user1.setPower(1);
-        User rs = userService.findUserByNameAndPassword(user1);
+        //User user1 = new User();
+        //user1.setUserName("shufangyi");
+        //user1.setPassword("shufangyi");
+        //user1.setPower(1);
+        User rs = userService.findUserByNameAndPassword(user);
         String isNull = "error";
         if (rs != null) {
             session.setAttribute("nowUser", rs.getUserName());
@@ -108,7 +108,7 @@ public class UserController {
     @ResponseBody
     String changePassword(User user, String newPassword) throws Exception {
         //User user1 = new User();
-        //user1.setId(13);
+        //user1.setUserName("shufangyi");
         //String qwe = "qweqwe";
         int rs = userService.changePassword(user, newPassword);
         String isNull = "error";

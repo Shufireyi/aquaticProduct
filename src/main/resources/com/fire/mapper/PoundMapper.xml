@@ -24,7 +24,21 @@
         <result column="create_time" jdbcType="DATE" property="createTime"/>
         <result column="update_time" jdbcType="DATE" property="updateTime"/>
     </resultMap>
-
+    <!--
+    <resultMap id="UserMapping" type="com.fire.pojo.User">
+        <id column="id" javaType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="String" property="userName"/>
+        <result column="password" jdbcType="String" property="password"/>
+        <result column="power" jdbcType="INTEGER" property="power"/>
+        <result column="tel" jdbcType="String" property="tel"/>
+        <result column="email" jdbcType="String" property="email"/>
+        <result column="enterprise_name" jdbcType="String" property="enterpriseName"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="login_time" jdbcType="DATE" property="loginTime"/>
+        <result column="last_login_time" jdbcType="DATE" property="lastLoginTime"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+    </resultMap>
+    -->
     <select id="findIdByUsername" parameterType="String" resultType="int">
         SELECT id
         FROM user
@@ -45,22 +59,22 @@
         user_id,enterprise_name,tel,email,create_time,update_time
         )
         VALUES (
-        #{id},#{pondName},#{province},#{city},
-        #{country},#{address},#{longitude},#{latitude},#{pondLength},
-        #{pondWidth},#{pondDeep},#{pondArea},#{personName},#{userName},
+        #{id},#{poundName},#{province},#{city},
+        #{country},#{address},#{longitude},#{latitude},#{poundLength},
+        #{poundWidth},#{poundDeep},#{poundArea},#{personName},#{userName},
         #{userId},#{enterpriseName},#{tel},#{email},#{createTime},#{updateTime}
         )
     </insert>
-    <delete id="deletePound" parameterType="int">
-        DELETE FROM pond_info
+    <delete id="deletePound" parameterType="Integer">
+        DELETE  FROM pond_info
         WHERE id=#{id}
     </delete>
 
     <update id="updatePound" parameterType="com.fire.pojo.Pound">
         UPDATE pond_info
         <set>
-            <if test="pondName!=null">
-                pond_name=#{pondName},
+            <if test="poundName!=null">
+                pond_name=#{poundName},
             </if>
             <if test="province!=null">
                 province=#{province},
@@ -80,17 +94,17 @@
             <if test="latitude!=null">
                 latitude=#{latitude},
             </if>
-            <if test="pondLength!=null">
-                pond_length=#{pondLength},
+            <if test="poundLength!=null">
+                pond_length=#{poundLength},
             </if>
-            <if test="pondWidth!=null">
-                pond_width=#{pondWidth},
+            <if test="poundWidth!=null">
+                pond_width=#{poundWidth},
             </if>
-            <if test="pondDeep!=null">
-                pond_deep=#{pondDeep},
+            <if test="poundDeep!=null">
+                pond_deep=#{poundDeep},
             </if>
-            <if test="pondArea!=null">
-                pond_area=#{pondArea},
+            <if test="poundArea!=null">
+                pond_area=#{poundArea},
             </if>
             <if test="personName!=null">
                 person_name=#{personName},
@@ -117,9 +131,67 @@
         where id=#{id}
     </update>
 
-    <select id="queryPound" resultType="com.fire.pojo.Pound">
+    <update id="updatePoundOwner" parameterType="com.fire.pojo.Pound">
+        UPDATE pond_info
+        <set>
+            <if test="personName!=null">
+                person_name=#{personName},
+            </if>
+            <if test="userName!=null">
+                user_name=#{userName},
+            </if>
+            <if test="enterpriseName!=null">
+                enterprise_name=#{enterpriseName},
+            </if>
+            <if test="tel!=null">
+                tel=#{tel},
+            </if>
+            <if test="email!=null">
+                email=#{email},
+            </if>
+            <if test="userId!=null">
+                user_id=#{userId}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="queryPoundLikeName"  parameterType="String" resultMap="PoundMapping">
         SELECT *
         FROM pond_info
+        WHERE pond_name
+        LIKE '%${value}%'
+
     </select>
+
+    <select id="queryUser" resultMap="com.fire.mapper.UserMapper.BaseResultMap">
+        SELECT *
+        FROM user
+    </select>
+
+    <select id="queryUserByUserName" parameterType="String" resultMap="com.fire.mapper.UserMapper.BaseResultMap">
+        SELECT *
+        FROM user
+        WHERE user_name=#{userName}
+    </select>
+
+    <insert id="addUser" parameterType="com.fire.pojo.User">
+        INSERT INTO user(
+        id,user_name,password,person_name,power,tel,email,enterprise_name,
+        create_time,login_time,last_login_time,count
+        )
+        VALUES (
+        #{id},#{userName},#{password},#{personName},#{power},#{tel},
+        #{email},#{enterpriseName},#{createTime},#{loginTime},#{lastLoginTime},
+        #{count}
+        )
+    </insert>
+
+    <delete id="deleteUserById" parameterType="Integer">
+        DELETE FROM user
+        WHERE id=#{id}
+    </delete>
+
+
 
 </mapper>

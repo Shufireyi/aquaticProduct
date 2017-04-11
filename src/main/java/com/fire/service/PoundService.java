@@ -1,6 +1,7 @@
 package com.fire.service;
 
 import com.fire.pojo.Pound;
+import com.fire.pojo.User;
 
 import java.util.List;
 
@@ -20,9 +21,20 @@ public interface PoundService {
     //鱼塘的添加、删除、查询、修改
     void addPound(Pound pound) throws Exception;
 
-    void deletePound(int id) throws Exception;
+    void deletePound(Integer id) throws Exception;
 
     void updatePound(Pound pound) throws Exception;
 
-    List<Pound> queryPound() throws Exception;
+    List<Pound> queryPoundLikeName(String poundName) throws Exception;
+
+
+    //对用户的添加删除查询
+    List<User> queryUser()throws Exception;
+
+    void addUser(User user)throws Exception;
+
+    void deleteUserById(Integer id)throws Exception;
+
+
+    public void changeOwner(Integer id, String userName)throws  Exception;
 }

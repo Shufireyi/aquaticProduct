@@ -8,14 +8,53 @@
 		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
 		<style type="text/css">
-			ul { cursor: pointer;}
+			ul { cursor: pointer; }
+			caption {text-align: center;}
+			input {width: 50px;}
 			
-			.pagination { float: right;}
+			/*.pagination { margin: 0 auto;}*/
+			.table-hover { margin-top: 50px;}
+			.col-md-9 input{width: 35px;}
+			.ll {text-align: center;}
 		</style>
 	</head>
 	<body>
+		<h1>数据展示</h1>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-1">
+
+					<input type="text" id="companyid" placeholder="公司id" />
+				</div>
+				<div class="col-md-1">
+
+					<input type="text" id="factoryid" placeholder="工厂id" />
+				</div>
+				<div class="col-md-1">
+
+					<input type="text" id="type" placeholder="类型" />
+				</div>
+				<div class="col-md-9">
+					<span>开始时间</span>
+					<input type="text" placeholder="年" value="2017" id="year"  />
+					<input type="text" placeholder="月" id="month" />
+					<input type="text" placeholder="日" id="day" />
+					<input type="text" placeholder="时" value="00" id="hour"/>
+					<input type="text" placeholder="分" value="00" id="minute"/>
+					<input type="text" placeholder="秒" value="00" id="second"/>
+					<span>结束时间</span>
+					<input type="text" placeholder="年" value="2017" id="eyear"  />
+					<input type="text" placeholder="月" id="emonth" />
+					<input type="text" placeholder="日" id="eday" />
+					<input type="text" placeholder="时" value="23" id="ehour"/>
+					<input type="text" placeholder="分" value="59" id="eminute"/>
+					<input type="text" placeholder="秒" value="59" id="esecond"/>
+					<button type="button" class="btn btn-primary" onclick="search()">查询数据</button>
+				</div>
+			</div>
+		</div>
+		
 		<table class="table table-hover">
-			<caption>数据展示</caption>
 			<thead>
 				<tr>
 					<th>公司id</th>
@@ -27,32 +66,19 @@
 				</tr>
 			</thead>
 			<tbody id="tb">
-				<tr>
-					<td>Tanmay</td>
-					<td>Bangalore</td>
-					<td>560001</td>
-					<td>560001</td>
-					<td>560001</td>
-					<td>560001</td>
-				</tr>
-				<tr>
-					<td>Tanmay</td>
-					<td>Bangalore</td>
-					<td>560001</td>
-					<td>560001</td>
-					<td>560001</td>
-					<td>560001</td>
-				</tr>
-				<tr>
-					<td>Tanmay</td>
-					<td>Bangalore</td>
-					<td>560001</td>
-					<td>560001</td>
-					<td>560001</td>
-					<td>560001</td>
-				</tr>
+				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 			</tbody>
-		</table>		
+		</table>
+		<div class="ll">
 		<ul class="pagination" id="pagination">
 		    <li><a onclick="listPagel()">&laquo;</a></li>
 		    <li><a onclick="listPage(1,1)">1</a></li>
@@ -62,55 +88,67 @@
 		    <li><a onclick="listPage(5,5)">5</a></li>
 		    <li><a onclick="listPager()">&raquo;</a></li>
 		</ul>
+		</div>
 	</body>
 	<script>
-
 		var nowpage = 1;
 		var n = 1;
 		var totalpage = 30;
-		var ul = document.getElementById("pagination");
-		ul.children[1].children[0].style.backgroundColor = " #ddd";    //默认显示第一页
 
-		list(1);
+		function search(){
+			list(1);
+			var ul = document.getElementById("pagination");
+			ul.children[1].children[0].style.backgroundColor = " #ddd";    //默认显示第一页
+		}
+		
+		function datatime(data){
+			if(data <= 9 && data >= 0){
+				if(data =="00"){
+					return data;
+				}else{
+					return "0"+data;
+				}
+			}else{
+				return data;
+			}
+		}
 
 		function list(page){
+			starttime = $('#year').val()+"-"+datatime($('#month').val())+"-"+datatime($('#day').val())+" "+datatime($('#hour').val())+":"+datatime($('#minute').val())+":"+datatime($('#second').val());
+			endtime = $('#eyear').val()+"-"+datatime($('#emonth').val())+"-"+datatime($('#eday').val())+" "+datatime($('#ehour').val())+":"+datatime($('#eminute').val())+":"+datatime($('#esecond').val());
+			//alert(starttime);
+			//alert(endtime);
 			$.ajax({
 				type:"post",
 				url:"/dataDisplay/queryHistoryDataByPage.action",
 				data:{
-					currentPage:page			
+					currentPage:page,
+					startTime:starttime,
+					endTime:endtime,
+					comid:$('#companyid').val(),
+					type:$('#type').val(),
+					facid:$('#factoryid').val()
 				},
 				success:function(returnValue){
                     totalpage = returnValue.page.totalPage;
                     var item = returnValue.list;
-                    for(var i=0;i<3;i++){
-//                        alert(item[i].value);
-                        var tbody = document.getElementById("tb");
-                        var tr = document.createElement("tr");
-                        tbody.appendChild(tr);
-
-//                        addtd(item[i].companyid, tr);
-//                        addtd(item[i].factoryid, tr);
-//                        addtd(item[i].sensorid, tr);
-//                        addtd(item[i].type, tr);
-//                        addtd(item[i].value, tr);
-//                        addtd(item[i].time, tr);
+                    for(var i=0;i<10;i++){
                         document.getElementById("tb").children[i].children[0].innerHTML = item[i].companyid;
                         document.getElementById("tb").children[i].children[1].innerHTML = item[i].factoryid;
                         document.getElementById("tb").children[i].children[2].innerHTML = item[i].sensorid;
                         document.getElementById("tb").children[i].children[3].innerHTML = item[i].type;
                         document.getElementById("tb").children[i].children[4].innerHTML = item[i].value;
-                        document.getElementById("tb").children[i].children[5].innerHTML = item[i].time;
+                        document.getElementById("tb").children[i].children[5].innerHTML = getDateTime(new Date(item[i].time));
                     }
 				}
 			});
 		}
 		
-		function addtd(obj,tr){
-			var td = document.createElement("td");
-			td.innerHTML = obj;
-			tr.appendChild(td);
-		}
+//		function addtd(obj,tr){
+//			var td = document.createElement("td");
+//			td.innerHTML = obj;
+//			tr.appendChild(td);
+//		}
 		
 		function getDateTime(date) {
 			    var year = date.getFullYear();
@@ -126,7 +164,6 @@
 		function listPage(page,flag){                          //flag为位置标记
 			if(page >0 && page <= totalpage){
 				var ul = document.getElementById("pagination");
-				//$('#tb tr').remove();
 				for(var i=1;i<6;i++){
 					ul.children[i].children[0].style.backgroundColor = "white";  
 				}
@@ -191,5 +228,6 @@
 				listPage(nowpage+1,n+1);
 			}
 		}
+		
 	</script>
 </html>

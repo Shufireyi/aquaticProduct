@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         String lastLoginTime = user.getLoginTime();
         DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String loginTime = format1.format(new Date());
-        System.out.println(loginTime);
+        //System.out.println(loginTime);
         user.setLastLoginTime(lastLoginTime);
         user.setLoginTime(loginTime);
 
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     public int changePassword(User user, String newPassword) throws Exception {
         Map<String,Object> temp = new HashMap<String,Object>();
-        temp.put("uid",user.getId());
+        temp.put("userName",user.getUserName());
         temp.put("newPassword",newPassword);
         return userMapper.changePassword(temp);
     }

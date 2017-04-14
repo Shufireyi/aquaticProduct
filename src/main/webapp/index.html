@@ -159,30 +159,30 @@
 		function list(page){
 			starttime = $('#year').val()+"-"+datatime($('#month'))+"-"+datatime($('#day'))+" "+datatime($('#hour'))+":"+datatime($('#minute'))+":"+datatime($('#second'));
 			endtime = $('#eyear').val()+"-"+datatime($('#emonth'))+"-"+datatime($('#eday'))+" "+datatime($('#ehour'))+":"+datatime($('#eminute'))+":"+datatime($('#esecond'));
-//			$.ajax({
-//				type:"post",
-//				url:"/dataDisplay/queryHistoryDataByPage.action",
-//				data:{
-//					currentPage:page,
-//					startTime:starttime,
-//					endTime:endtime,
-//					comid:$('#companyid').val(),
-//					type:$('#type').val(),
-//					facid:$('#factoryid').val()
-//				},
-//				success:function(returnValue){
+			$.ajax({
+				type:"post",
+				url:"/dataDisplay/queryHistoryDataByPage.action",
+				data:{
+					currentPage:page,
+					startTime:starttime,
+					endTime:endtime,
+					comid:$('#companyid').val(),
+					type:$('#type').val(),
+					facid:$('#factoryid').val()
+				},
+				success:function(returnValue){
 					//测试用例
-					if(page == 1){
-					var returnValue = {"page":{"totalNumber":146162,"totalPage":100,"currentPage":1,"pageNumber":3,"dbIndex":0,"dbNumber":3},
-					"list":[{"id":1,"companyid":2,"factoryid":1,"sensorid":1,"type":"do2_1","value":8.448,"time":1484766847000},{"id":2,"companyid":2,"factoryid":1,"sensorid":2,"type":"ph_1","value":7.642,"time":1484766847000},
-					{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},
-					{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000}]};
-                   }else if(page == 2){
-					var returnValue = {"page":{"totalNumber":146162,"totalPage":100,"currentPage":1,"pageNumber":3,"dbIndex":0,"dbNumber":3},
-					"list":[{"id":1,"companyid":2,"factoryid":1,"sensorid":1,"type":"do2_1","value":8.448,"time":1484766847000},{"id":2,"companyid":2,"factoryid":1,"sensorid":2,"type":"ph_1","value":7.642,"time":1484766847000},
-					{"id":4,"companyid":3,"factoryid":100,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},
-					{"id":4,"companyid":3,"factoryid":100,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000}]};
-                   }
+// 					if(page == 1){
+// 					var returnValue = {"page":{"totalNumber":146162,"totalPage":100,"currentPage":1,"pageNumber":3,"dbIndex":0,"dbNumber":3},
+// 					"list":[{"id":1,"companyid":2,"factoryid":1,"sensorid":1,"type":"do2_1","value":8.448,"time":1484766847000},{"id":2,"companyid":2,"factoryid":1,"sensorid":2,"type":"ph_1","value":7.642,"time":1484766847000},
+// 					{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},
+// 					{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000}]};
+//                    }else if(page == 2){
+// 					var returnValue = {"page":{"totalNumber":146162,"totalPage":100,"currentPage":1,"pageNumber":3,"dbIndex":0,"dbNumber":3},
+// 					"list":[{"id":1,"companyid":2,"factoryid":1,"sensorid":1,"type":"do2_1","value":8.448,"time":1484766847000},{"id":2,"companyid":2,"factoryid":1,"sensorid":2,"type":"ph_1","value":7.642,"time":1484766847000},
+// 					{"id":4,"companyid":3,"factoryid":100,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},
+// 					{"id":4,"companyid":3,"factoryid":100,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000}]};
+//                    }
                     totalpage = returnValue.page.totalPage;
                     var item = returnValue.list;
                     var trhtml = "";
@@ -200,8 +200,8 @@
                     for(var i=0;i<totalpage;i++){
 						$('#none').append("<tr></tr>");
 					}
-//				}
-//			});
+				}
+			});
 		}
 		
 		//转换时间戳

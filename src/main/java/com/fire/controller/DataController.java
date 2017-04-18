@@ -37,7 +37,7 @@ public class DataController {
     public
     @ResponseBody
     Map<String, Object> queryHistoryDataByPage(HistoryDateUtil historyDateUtil, Page page) throws Exception {
-        Map<String, Object> parameter = new HashMap<String, Object>();
+        Map<String, Object> parameter = new HashMap<>();
         //HistoryDateUtil historyDateUtil1 = new HistoryDateUtil();
         //Page page1 = new Page();
         //page1.setCurrentPage(1);
@@ -49,9 +49,18 @@ public class DataController {
         parameter.put("util", historyDateUtil);
         parameter.put("page", page);
         List<ShuichanData> list = dataService.queryHistoryDataByPage(parameter);
-        Map<String,Object> returnValue = new HashMap<String,Object>();
-        returnValue.put("list",list);
-        returnValue.put("page",page);
+        Map<String, Object> returnValue = new HashMap<String, Object>();
+        returnValue.put("list", list);
+        returnValue.put("page", page);
         return returnValue;
+    }
+
+    @RequestMapping(value = "queryHistoryData")
+    public
+    @ResponseBody
+    List<ShuichanData> queryHistoryData(HistoryDateUtil historyDateUtil) throws Exception {
+        HistoryDateUtil historyDateUtil1 = new HistoryDateUtil();
+        List<ShuichanData> list = dataService.queryHistoryData(historyDateUtil1);
+        return list;
     }
 }

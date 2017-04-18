@@ -1,5 +1,6 @@
 package com.fire.service;
 
+import com.fire.entity.HistoryDateUtil;
 import com.fire.pojo.ShuichanData;
 
 import java.util.List;
@@ -20,4 +21,11 @@ public interface DataService {
      * 历史数据分页查询接口
      */
     List<ShuichanData> queryHistoryDataByPage(Map<String, Object> parameter) throws Exception;
+
+
+    /**
+     * 功能描述：
+     * 历史数据查询接口
+     */
+    List<ShuichanData> queryHistoryData(HistoryDateUtil historyDateUtil) throws Exception;
 }

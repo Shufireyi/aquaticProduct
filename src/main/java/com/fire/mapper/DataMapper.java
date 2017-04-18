@@ -1,5 +1,6 @@
 package com.fire.mapper;
 
+import com.fire.entity.HistoryDateUtil;
 import com.fire.pojo.ShuichanData;
 
 import java.util.List;
@@ -19,5 +20,11 @@ public interface DataMapper {
      * 功能描述：
      * 历史数据分页查询的mapper接口
      */
-    public List<ShuichanData> queryHistoryDataByPage(Map<String, Object> parameter) throws Exception;
+    List<ShuichanData> queryHistoryDataByPage(Map<String, Object> parameter) throws Exception;
+
+    /**
+     * 功能描述：
+     * 历史数据分页查询的mapper接口
+     */
+    List<ShuichanData> queryHistoryData(HistoryDateUtil historyDateUtil) throws Exception;
 }

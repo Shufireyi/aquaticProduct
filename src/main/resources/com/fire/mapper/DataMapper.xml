@@ -22,4 +22,24 @@
         order by id
     </select>
 
+    <select id="queryHistoryData" parameterType="com.fire.entity.HistoryDateUtil" resultType="com.fire.pojo.ShuichanData">
+        SELECT * FROM ShuichanData
+        <where>
+            <if test="comid != null">
+                and companyid = ${comid}
+            </if>
+            <if test="facid != null">
+                and factoryid = ${facid}
+            </if>
+            <if test="type != null and !&quot;&quot;.equals(type.trim())">
+                and type LIKE '%${type}%'
+            </if>
+            <if test="startTime != null and !&quot;&quot;.equals(util.startTime.trim())
+                and endTime != null and !&quot;&quot;.equals(util.endTime.trim())">
+                and time BETWEEN '${startTime}' AND '${endTime}'
+            </if>
+        </where>
+        order by id
+    </select>
+
 </mapper>

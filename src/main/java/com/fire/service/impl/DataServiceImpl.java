@@ -1,5 +1,6 @@
 package com.fire.service.impl;
 
+import com.fire.entity.HistoryDateUtil;
 import com.fire.mapper.DataMapper;
 import com.fire.pojo.ShuichanData;
 import com.fire.service.DataService;
@@ -21,7 +22,12 @@ public class DataServiceImpl implements DataService {
 
     @Autowired
     private DataMapper dataMapper;
+
     public List<ShuichanData> queryHistoryDataByPage(Map<String, Object> parameter) throws Exception {
         return dataMapper.queryHistoryDataByPage(parameter);
+    }
+
+    public List<ShuichanData> queryHistoryData(HistoryDateUtil historyDateUtil) throws Exception {
+        return dataMapper.queryHistoryData(historyDateUtil);
     }
 }

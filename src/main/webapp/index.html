@@ -4,30 +4,43 @@
 		<meta charset="utf-8" />
 		<title></title>
 		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
+		<link rel="stylesheet" type="text/css" href="css/animate.css"/>
 		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
+		
 		<style type="text/css">
+			*{margin: 0;padding: 0;}
 			ul { cursor: pointer; }
+			h1 {text-align: center;}
+			body {font-family: "微软雅黑"; }
 			caption {text-align: center;}
-			input {width: 50px;}
-			
-			/*.pagination { margin: 0 auto;}*/
+			input {width: 50px;height: 30px;background-color: azure;outline: none;}
+			td {width: 100px;height: 40px;background-color: ivory;text-align: center;}
+			th {width: 100px;height: 40px;background-color: lightblue;text-align: center;}
+
 			.table-hover { margin-top: 50px;}
 			.col-md-9 input{width: 35px;}
 			.ll {text-align: center;}
+			.holder { margin: 15px 0; }
+			.holder a { padding: 6px 12px; line-height: 1.42857143; color: #337ab7; background-color: #fff; border: 1px solid #ddd; }
+			.holder a:hover {border: 1px solid deepskyblue; }
+			.holder a.jp-previous { margin-right: 15px; }
+			.holder a.jp-next { margin-left: 15px; }
+			.holder a.jp-current, a.jp-current:hover { font-weight: bold; border:none; color: black; }
+			.holder span { margin: 0 5px; }
+			    
 		</style>
 	</head>
 	<body>
-		<h1>数据展示</h1>
+
+		<h1>数据展示</h1><hr />
 		<div class="container">
 			<div class="row">
 				<div class="col-md-1">
-
 					<input type="text" id="companyid" placeholder="公司id" />
 				</div>
 				<div class="col-md-1">
-
 					<input type="text" id="factoryid" placeholder="工厂id" />
 				</div>
 				<div class="col-md-1">
@@ -37,15 +50,15 @@
 				<div class="col-md-9">
 					<span>开始时间</span>
 					<input type="text" placeholder="年" value="2017" id="year"  />
-					<input type="text" placeholder="月" id="month" />
-					<input type="text" placeholder="日" id="day" />
+					<input type="text" placeholder="月" value="" id="month" />
+					<input type="text" placeholder="日" value="" id="day" />
 					<input type="text" placeholder="时" value="00" id="hour"/>
 					<input type="text" placeholder="分" value="00" id="minute"/>
 					<input type="text" placeholder="秒" value="00" id="second"/>
 					<span>结束时间</span>
 					<input type="text" placeholder="年" value="2017" id="eyear"  />
-					<input type="text" placeholder="月" id="emonth" />
-					<input type="text" placeholder="日" id="eday" />
+					<input type="text" placeholder="月" value="" id="emonth" />
+					<input type="text" placeholder="日" value="" id="eday" />
 					<input type="text" placeholder="时" value="23" id="ehour"/>
 					<input type="text" placeholder="分" value="59" id="eminute"/>
 					<input type="text" placeholder="秒" value="59" id="esecond"/>
@@ -76,48 +89,76 @@
 				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 				<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+
 			</tbody>
 		</table>
+		<table><thead></thead><tbody id="none"></tbody></table>
 		<div class="ll">
-		<ul class="pagination" id="pagination">
-		    <li><a onclick="listPagel()">&laquo;</a></li>
-		    <li><a onclick="listPage(1,1)">1</a></li>
-		    <li><a onclick="listPage(2,2)">2</a></li>
-		    <li><a onclick="listPage(3,3)">3</a></li>
-		    <li><a onclick="listPage(4,4)">4</a></li>
-		    <li><a onclick="listPage(5,5)">5</a></li>
-		    <li><a onclick="listPager()">&raquo;</a></li>
-		</ul>
+			<ul class="holder" ></ul>
 		</div>
+		
+
 	</body>
+	<script type="text/javascript" src = "js/jPages.min.js"></script>
+	
 	<script>
 		var nowpage = 1;
 		var n = 1;
 		var totalpage = 30;
 
+		//containerID：需要实现分页的容器元素，可以是div或者UL，OL
+		//first： 自定义”首页“button是否显示，缺省为false，如果传递字符串，则显示为“首页”文字。
+		//previous：自定义”上一页“button是否显示
+		//next：同上是否显示”下一页“button
+		//last：是否显示”尾页“button
+		//startPage：需要显示的开发页数，缺省为”1“
+		//perPage：每页显示的项目数，缺省为”10“
+		//midRange：显示包含当前页数显示页面数量，缺省为”5“
+		//startRange：显示开始显示的页面数，无论目前你处于哪个页面，缺省”1”。
+		//endRange：显示末尾显示的页面数，无论目前你处于哪个页面，缺省”1”。
+		//callback：回调函数function(page, items){}，pages对象属性，pages.current，pages.interval，pages.count
+		//animation：使用Animate.css的动画效果，当然需要添加css3类库支持。
+		//fallback：如果不使用CSS3动画，你可以使用fallback来设定jQuery的淡入效果的速度。
+
+
 		function search(){
 			list(1);
 			var ul = document.getElementById("pagination");
-			ul.children[1].children[0].style.backgroundColor = " #ddd";    //默认显示第一页
+			$(function(){
+				$("ul.holder").jPages({                  //jPages插件
+					containerID : "none",
+					previous : "上一页",
+					next : "下一页",
+					perPage : 4,
+					delay : 20,
+					totalPage : totalpage,
+					callback:function(page,item){
+						console.log(page.current);
+						list(page.current);
+					},
+				});
+			});
 		}
 		
+		//转换时间格式为yymmddhhmmss
 		function datatime(data){
-			if(data <= 9 && data >= 0){
-				if(data =="00"){
-					return data;
+			if(data.val() == ""){
+				return "00";
+			}else if(data.val() <= 9 && data.val() >= 0){
+				if(data.val() == "00"){
+					return data.val();
 				}else{
-					return "0"+data;
+					return "0"+data.val();
 				}
 			}else{
-				return data;
+				return data.val();
 			}
 		}
 
+		//显示数据
 		function list(page){
-			starttime = $('#year').val()+"-"+datatime($('#month').val())+"-"+datatime($('#day').val())+" "+datatime($('#hour').val())+":"+datatime($('#minute').val())+":"+datatime($('#second').val());
-			endtime = $('#eyear').val()+"-"+datatime($('#emonth').val())+"-"+datatime($('#eday').val())+" "+datatime($('#ehour').val())+":"+datatime($('#eminute').val())+":"+datatime($('#esecond').val());
-			//alert(starttime);
-			//alert(endtime);
+			starttime = $('#year').val()+"-"+datatime($('#month'))+"-"+datatime($('#day'))+" "+datatime($('#hour'))+":"+datatime($('#minute'))+":"+datatime($('#second'));
+			endtime = $('#eyear').val()+"-"+datatime($('#emonth'))+"-"+datatime($('#eday'))+" "+datatime($('#ehour'))+":"+datatime($('#eminute'))+":"+datatime($('#esecond'));
 			$.ajax({
 				type:"post",
 				url:"/dataDisplay/queryHistoryDataByPage.action",
@@ -130,26 +171,40 @@
 					facid:$('#factoryid').val()
 				},
 				success:function(returnValue){
+					//测试用例
+// 					if(page == 1){
+// 					var returnValue = {"page":{"totalNumber":146162,"totalPage":100,"currentPage":1,"pageNumber":3,"dbIndex":0,"dbNumber":3},
+// 					"list":[{"id":1,"companyid":2,"factoryid":1,"sensorid":1,"type":"do2_1","value":8.448,"time":1484766847000},{"id":2,"companyid":2,"factoryid":1,"sensorid":2,"type":"ph_1","value":7.642,"time":1484766847000},
+// 					{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},
+// 					{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000}]};
+//                    }else if(page == 2){
+// 					var returnValue = {"page":{"totalNumber":146162,"totalPage":100,"currentPage":1,"pageNumber":3,"dbIndex":0,"dbNumber":3},
+// 					"list":[{"id":1,"companyid":2,"factoryid":1,"sensorid":1,"type":"do2_1","value":8.448,"time":1484766847000},{"id":2,"companyid":2,"factoryid":1,"sensorid":2,"type":"ph_1","value":7.642,"time":1484766847000},
+// 					{"id":4,"companyid":3,"factoryid":100,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},
+// 					{"id":4,"companyid":3,"factoryid":100,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000},{"id":3,"companyid":2,"factoryid":1,"sensorid":2,"type":"water_temp_1","value":8.51,"time":1484766847000}]};
+//                    }
                     totalpage = returnValue.page.totalPage;
                     var item = returnValue.list;
-                    for(var i=0;i<10;i++){
-                        document.getElementById("tb").children[i].children[0].innerHTML = item[i].companyid;
-                        document.getElementById("tb").children[i].children[1].innerHTML = item[i].factoryid;
-                        document.getElementById("tb").children[i].children[2].innerHTML = item[i].sensorid;
-                        document.getElementById("tb").children[i].children[3].innerHTML = item[i].type;
-                        document.getElementById("tb").children[i].children[4].innerHTML = item[i].value;
-                        document.getElementById("tb").children[i].children[5].innerHTML = getDateTime(new Date(item[i].time));
+                    var trhtml = "";
+                    for(var i=0;i<item.length;i++){                                                          //每页几条数据
+                        var info = ["companyid","factoryid","sensorid","type","value","time"];
+                        var html = "";
+                        item[i].time = getDateTime(new Date(item[i].time));
+                        for(var j=0;j<6;j++){
+                        	html+="<td>"+item[i][info[j]]+"</td>";
+                        }
+                        trhtml += "<tr id="+item[i].id+">"+html+"</tr>"
                     }
+                    $('#tb').html(trhtml);
+                    $('#tb tr').addClass("animated fadeInUp");
+                    for(var i=0;i<totalpage;i++){
+						$('#none').append("<tr></tr>");
+					}
 				}
 			});
 		}
 		
-//		function addtd(obj,tr){
-//			var td = document.createElement("td");
-//			td.innerHTML = obj;
-//			tr.appendChild(td);
-//		}
-		
+		//转换时间戳
 		function getDateTime(date) {
 			    var year = date.getFullYear();
 			    var month = date.getMonth() + 1;
@@ -159,75 +214,5 @@
 			    var ss = date.getSeconds();
 			    return year + "-" + month + "-" + day+" "+hh+":"+mm+":"+ss; 
 		}
-		
-		//分页功能
-		function listPage(page,flag){                          //flag为位置标记
-			if(page >0 && page <= totalpage){
-				var ul = document.getElementById("pagination");
-				for(var i=1;i<6;i++){
-					ul.children[i].children[0].style.backgroundColor = "white";  
-				}
-
-				if(flag >=2 && flag <=4){	
-					ul.children[flag].children[0].style.backgroundColor = " #ddd"; //选中为灰色
-					nowpage = page;
-					n = flag;
-				}else if(flag == 1){
-						if(document.getElementById("pagination").children[1].children[0].innerHTML == 1){
-							ul.children[1].children[0].style.backgroundColor = " #ddd"; 
-						}else{
-							ul.children[2].children[0].style.backgroundColor = " #ddd";
-						}
-						if(page != 1){
-							for(var i=1;i<6;i++){
-								ul.children[i].children[0].setAttribute("onclick","listPage("+(page+i-2)+","+i+")");
-								ul.children[i].children[0].innerHTML = page+i-2;
-							}
-						}
-						nowpage = page;
-						if(page == 1){ 
-							n = flag;
-						}else{
-							n = flag+1;
-						}
-				}else if(flag == 5){
-						if(document.getElementById("pagination").children[5].children[0].innerHTML == totalpage){
-							ul.children[5].children[0].style.backgroundColor = " #ddd"; 
-						}else{
-							ul.children[4].children[0].style.backgroundColor = " #ddd"; 
-						}
-						if(page < totalpage){
-							for(var i=1;i<6;i++){
-								ul.children[i].children[0].setAttribute("onclick","listPage("+(page+i-4)+","+i+")");
-								ul.children[i].children[0].innerHTML = page+i-4;
-							}
-						}
-						nowpage = page;
-						if(page == totalpage){
-							n = flag;							
-						}else{
-							n = flag-1;
-						}
-				}
-				list(page);
-			}
-		}
-		
-		function listPagel(){
-			if(n == 1){
-				listPage(nowpage-1,n);
-			}else{
-				listPage(nowpage-1,n-1);
-			}
-		}
-		
-		function listPager(){
-			if(n == 5){
-				listPage(nowpage+1,n);
-			}else{
-				listPage(nowpage+1,n+1);
-			}
-		}
-		
 	</script>
 </html>

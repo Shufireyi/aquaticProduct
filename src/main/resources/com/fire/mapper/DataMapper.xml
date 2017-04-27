@@ -34,8 +34,8 @@
             <if test="type != null and !&quot;&quot;.equals(type.trim())">
                 and type LIKE '%${type}%'
             </if>
-            <if test="startTime != null and !&quot;&quot;.equals(util.startTime.trim())
-                and endTime != null and !&quot;&quot;.equals(util.endTime.trim())">
+            <if test="startTime != null and !&quot;&quot;.equals(startTime.trim())
+                and endTime != null and !&quot;&quot;.equals(endTime.trim())">
                 and time BETWEEN '${startTime}' AND '${endTime}'
             </if>
         </where>

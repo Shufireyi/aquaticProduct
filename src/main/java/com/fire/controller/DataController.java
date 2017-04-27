@@ -59,8 +59,8 @@ public class DataController {
     public
     @ResponseBody
     List<ShuichanData> queryHistoryData(HistoryDateUtil historyDateUtil) throws Exception {
-        HistoryDateUtil historyDateUtil1 = new HistoryDateUtil();
-        List<ShuichanData> list = dataService.queryHistoryData(historyDateUtil1);
+        //HistoryDateUtil historyDateUtil1 = new HistoryDateUtil();
+        List<ShuichanData> list = dataService.queryHistoryData(historyDateUtil);
         return list;
     }
 }

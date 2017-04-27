@@ -1,0 +1,113 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	cursor: pointer;
+}
+
+h1 {
+	text-align: center;
+}
+
+body {
+	font-family: "微软雅黑";height:100%; font:12px/18px Tahoma, Helvetica, Arial, Verdana, "\5b8b\4f53", sans-serif; color:#51555C;
+}
+
+caption {
+	text-align: center;
+}
+
+input {
+	width: 50px;
+	height: 30px;
+	background-color: azure;
+	outline: none;
+}
+
+td {
+	width: 100px;
+	height: 40px;
+	background-color: ivory;
+	text-align: center;
+}
+
+th {
+	width: 100px;
+	height: 40px;
+	background-color: lightblue;
+	text-align: center;
+}
+
+.table-hover {
+	margin-top: 50px;
+}
+
+.col-md-9 input {
+	width: 35px;
+}
+
+.ll {
+	text-align: center;
+}
+
+.holder {
+	margin: 15px 0;
+}
+
+.holder a {
+	padding: 6px 12px;
+	line-height: 1.42857143;
+	color: #337ab7;
+	background-color: #fff;
+	border: 1px solid #ddd;
+}
+
+.holder a:hover {
+	border: 1px solid deepskyblue;
+}
+
+.holder a.jp-previous {
+	margin-right: 15px;
+}
+
+.holder a.jp-next {
+	margin-left: 15px;
+}
+
+.holder a.jp-current,
+a.jp-current:hover {
+	font-weight: bold;
+	border: none;
+	color: black;
+}
+
+.holder span {
+	margin: 0 5px;
+}
+
+#main {
+	width: 1200px;
+	height: 600px;
+}
+#type {
+	width: 70px;
+	height: 30px;
+	background-color: azure;
+	outline: none;
+}
+#start_date{
+	width: 200px;
+}
+.demo{}
+
+#example_starttime,#example_endtime{ width: 150px;}
+
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px;}
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+.ui_tpicker_hour_label,.ui_tpicker_minute_label,.ui_tpicker_second_label,.ui_tpicker_time_label{padding-left:20px}

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="UTF-8">
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/charts.css"/>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/jqury-1.7.2.js"></script>
+		<script type="text/javascript" src="js/echarts.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js" ></script>
+		<script type="text/javascript" src="js/jquery-ui.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-slide.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
+		<script>
+			$(function(){
+				$('#example_starttime').datetimepicker({
+				    showSecond: true,
+				    timeFormat: 'hh:mm:ss'
+			    });
+			    $('#example_endtime').datetimepicker({
+				    showSecond: true,
+				    timeFormat: 'hh:mm:ss'
+			    });
+			});
+		</script>
+	
+		<!--<style type="text/css">
+
+						
+		</style>-->
+	</head>
+
+	<body>
+
+		<!--<h1>数据展示</h1><hr />-->
+		<div class="container">
+			<div class="row">
+				<div class="col-md-1">
+					<input type="text" id="companyid" placeholder="公司id" />
+				</div>
+				<div class="col-md-1">
+					<input type="text" id="factoryid" placeholder="工厂id" />
+				</div>
+				<div class="col-md-1">
+					<select name="类型" id="type" value="类型">
+						<option value="ph_1">ph1</option>
+						<option value="ph_2">ph2</option>
+						<option value="water_temp_1">水温1</option>
+						<option value="water_temp_2">水温2</option>
+						<option value="do2_1">溶解氧1</option>
+						<option value="do2_2">溶解氧2</option>
+					</select>
+				</div>
+				<div class="col-md-9">
+                    <div class="demo">
+					  <span>起始时间</span>
+				      <input type="text" id="example_starttime" value="2017-01-01 00:00:00" />
+				      <span>结束时间</span>
+				      <input type="text" id="example_endtime" value="2017-01-01 23:59:59" />
+					<button type="button" class="btn btn-primary" onclick="list()">查询数据</button>
+				   </div>
+				</div>
+			</div>
+		</div>
+
+		<div id="main">
+		</div>
+
+	</body>
+	<script type="text/javascript" src="js/jPages.min.js"></script>
+
+	<script>
+		//转换时间格式为yymmddhhmmss
+//		function datatime(data) {
+//			if(data.val() == "") {
+//				return "00";
+//			} else if(data.val() <= 9 && data.val() >= 0) {
+//				if(data.val() == "00") {
+//					return data.val();
+//				} else {
+//					return "0" + data.val();
+//				}
+//			} else {
+//				return data.val();
+//			}
+//		}
+
+		//显示数据
+		function list() {
+			$.ajax({
+				type:"post",
+				url:"/dataDisplay/queryHistoryData.action",
+				data:{
+					startTime:$('#example_starttime').val(),
+					endTime:$('#example_endtime').val(),
+					comid:$('#companyid').val(),
+					type:$('#type').val(),
+					facid:$('#factoryid').val()
+				},
+				success:function(returnValue){
+					callback(returnValue);
+				}
+			});
+		}
+
+		function callback(item) {
+			var myChart = echarts.init(document.getElementById('main'));
+			var linename = [];                           //不同线条名字   
+			for(var i=0;i<item.length;i++){
+				linename.push(item[i].sensorid);
+			}
+			
+			
+			Array.prototype.unique = function(){         //去重函数
+			 var res = [];
+			 var json = {};
+			 for(var i = 0; i < this.length; i++){
+			  if(!json[this[i]]){
+			   res.push(this[i]);
+			   json[this[i]] = 1;
+			  }
+			 }
+			 return res;
+			}
+
+			linename = linename.unique();
+			
+			var line = [{}];
+			var serieData = [];
+			
+			var serie = function(name,data) {                  //建立对象
+					this.name = name;
+					this.type = 'line',
+					this.showAllSymbol =  true,
+//					this.symbol = 'none',
+					this.symbolSize = function(value) {
+						return Math.round(value[2] / 10) + 2;
+					},
+					this.data = data
+			};
+			
+			for(var i=0;i<linename.length;i++){                   //给series赋值
+				var d = [];
+				var sensor = linename[i];
+				for(var j = 0; j < item.length; j++) {            //y轴数据填充
+					if(item[j].sensorid == sensor) {
+						d.push([
+							new Date(item[j].time),
+							item[j].value
+						]);
+					}
+				}
+				
+				line[i] = new serie(linename[i],d);
+				linename[i] = String(linename[i]);
+			}
+
+			option = {
+				title: {
+					text: '水产传感器采集数据',
+					subtext: linename
+				},
+//				tooltip: {
+//					trigger: 'item',
+//					formatter: function(params) {
+//						var date = new Date(params.value[0]);
+//						data = date.getFullYear() + '-' +
+//							(date.getMonth() + 1) + '-' +
+//							date.getDate() + ' ' +
+//							date.getHours() + ':' +
+//							date.getMinutes();
+//						return data + '<br/>' +
+//							params.value[1];
+//					}
+//				},
+				tooltip: {
+					trigger: 'axis',
+					position: function(pt) {
+						return [pt[0], '10%'];     //提示框显示的内容 pt[0]跟着鼠标的位置
+					}
+				},
+				toolbox: {                             //数据区域 缩放
+					feature: {
+						dataZoom: {
+							yAxisIndex: 'none'
+						},
+						restore: {},
+						saveAsImage: {}
+					}
+				},
+				dataZoom: [{
+					show: true,
+					start: 70
+				}, {                                  //移动滑块
+				start: 0,
+				end: 10,
+				handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+				handleSize: '80%',
+				handleStyle: {
+					color: '#fff',
+					shadowBlur: 3,
+					shadowColor: 'rgba(0, 0, 0, 0.6)',
+					shadowOffsetX: 2,
+					shadowOffsetY: 2
+				}
+				}],
+				legend: {
+					data:linename          //折线名字
+				},
+				grid: {
+					y2: 80
+				},
+				xAxis: [{
+					type: 'time',
+					splitNumber: 10
+				}],
+				yAxis: [{
+					type: 'value'
+				}],
+				series:line
+			};
+			
+			myChart.setOption(option);
+
+		}
+
+		//转换时间戳
+	</script>
+
+</html>

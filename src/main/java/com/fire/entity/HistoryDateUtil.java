@@ -9,8 +9,10 @@ package com.fire.entity;
  */
 public class HistoryDateUtil {
     public String comid;
+
     public String facid;
     public String type;
+    private int suffix;   //type的后缀，用于区分固城河1、2
     //public String startDate;
     public String startTime;
     //public String endDate;
@@ -70,5 +72,13 @@ public class HistoryDateUtil {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public int getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(int suffix) {
+        this.suffix = suffix;
     }
 }

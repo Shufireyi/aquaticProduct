@@ -97,7 +97,7 @@
         )
     </select>
     <select id="queryCurrentWater" parameterType="com.fire.entity.HistoryDateUtil" resultType="com.fire.pojo.ShuichanData">
-        SELECT * from mqttai.shuichandata where
+        SELECT * from mqttai.ShuichanData where
         id=(
         select max(id) FROM ShuichanData WHERE companyid=${comid}
         <if test="facid!=null">

@@ -1,108 +1,42 @@
-* {
-	margin: 0;
-	padding: 0;
-}
+* { margin: 0; padding: 0; }
+ul { cursor: pointer; }
+h1 { text-align: center;line-height: 50px; }
+body {background-color: azure;height: 100%; font-family: "微软雅黑";height:100%; font:12px/18px Tahoma, Helvetica, Arial, Verdana, "\5b8b\4f53", sans-serif; color:#51555C; }
+caption { text-align: center; }
+input { width: 150px; height: 30px; background:white;padding-left: 5px; outline:none; border:0px; }
+td { width: 100px; height: 40px; background-color: ivory; text-align: center; }
+th { width: 100px; height: 40px; background-color: lightblue; text-align: center; }
+button{cursor: pointer; border: 0px; height: 30px; width: 100px; background-color: rgb(46,184,147); color: white;border-radius: 5px;}
+button:hover {background-color: rgb(46,164,147);}
 
-ul {
-	cursor: pointer;
-}
+#dayType {cursor: pointer; border: 0px; height: 30px; width: 100px;color: white;border-radius: 5px;background-color: rgb(24,114,230);}
+.table-hover { margin-top: 50px; }
+.headdiv {position: absolute;width: 100%; height: 50px; top: 0px; background-color: rgb(46,184,147) /*rgb(24,114,230)*/;z-index: 1;}
+.headdiv h1 {color: white;}
+.leftdiv {position: absolute;height: 100%; width: 120px; top: 0px; background-color: rgb(42,57,60);z-index: 0;}
+.leftdiv ul {margin: 300px 0 0 5px;}
+.leftdiv li { color: rgb(46,184,147);font-size: large;font-weight: bold;margin-top: 50px;}
+.leftdiv img {width: 100px; height: 100px;position: absolute; top: 70px;left: 10px;}
+.leftdiv li:hover {color: rgb(46,164,147);}
+.mydiv {margin: 100px 0 0 150px;}
+.charsdiv {position: absolute;width: 1100px; height: 450px; left: 50%;margin:0px 0 0 -550px;}
+.imgdiv { height: 100px;width: 1200px;}
+.imgdiv div {float: left;margin-left:200px ;width: 190px; height: 100px;}
+.imgdiv img {width: 100px;height: 100px;float: left;-moz-transition: all 0.5s ease-in-out; -webkit-transition: all 0.5s ease-in-out; -o-transition: all 0.5s ease-in-out; -ms-transition: all 0.5s ease-in-out; transition: all 0.5s ease-in-out; -moz-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -ms-transform: rotate(360deg); transform: rotate(360deg);}
+.imgdiv img:hover {-moz-transition: all 0.5s ease-in-out; -webkit-transition: all 0.5s ease-in-out; -o-transition: all 0.5s ease-in-out; -ms-transition: all 0.5s ease-in-out; transition: all 0.5s ease-in-out; -moz-transform: rotate(-360deg); -webkit-transform: rotate(-360deg); -o-transform: rotate(-360deg); -ms-transform: rotate(-360deg); transform: rotate(-360deg);}
+.imgdiv p {float: right;}
+.datadiv {margin: 50px 0 0 100px; height: 100px;}
+.datadiv span,button,select { margin-left: 50px;}
+.data2div {margin: 50px 0 0 100px; height: 100px;display: none;}
+.data2div span,button,select { margin-left: 50px;}
+.data2div input{width: 100px;}
 
-h1 {
-	text-align: center;
-}
 
-body {
-	font-family: "微软雅黑";height:100%; font:12px/18px Tahoma, Helvetica, Arial, Verdana, "\5b8b\4f53", sans-serif; color:#51555C;
-}
-
-caption {
-	text-align: center;
-}
-
-input {
-	width: 50px;
-	height: 30px;
-	background-color: azure;
-	outline: none;
-}
-
-td {
-	width: 100px;
-	height: 40px;
-	background-color: ivory;
-	text-align: center;
-}
-
-th {
-	width: 100px;
-	height: 40px;
-	background-color: lightblue;
-	text-align: center;
-}
-
-.table-hover {
-	margin-top: 50px;
-}
-
-.col-md-9 input {
-	width: 35px;
-}
-
-.ll {
-	text-align: center;
-}
-
-.holder {
-	margin: 15px 0;
-}
-
-.holder a {
-	padding: 6px 12px;
-	line-height: 1.42857143;
-	color: #337ab7;
-	background-color: #fff;
-	border: 1px solid #ddd;
-}
-
-.holder a:hover {
-	border: 1px solid deepskyblue;
-}
-
-.holder a.jp-previous {
-	margin-right: 15px;
-}
-
-.holder a.jp-next {
-	margin-left: 15px;
-}
-
-.holder a.jp-current,
-a.jp-current:hover {
-	font-weight: bold;
-	border: none;
-	color: black;
-}
-
-.holder span {
-	margin: 0 5px;
-}
-
-#main {
-	width: 1200px;
-	height: 600px;
-}
-#type {
-	width: 70px;
-	height: 30px;
-	background-color: azure;
-	outline: none;
-}
-#start_date{
-	width: 200px;
-}
-.demo{}
-
-#example_starttime,#example_endtime{ width: 150px;}
+.mainBg {width: 1100px; height: 450px; margin-top: -425px;border-radius: 50px; background-color: white;z-index: 0;position: relative;}
+#main { width: 1100px; height: 400px; top: 0px; z-index: 1;position: relative;margin-left: 20px;}
+#factoryid { width: 90px; height: 30px; background-color: azure; outline: none; }
+#start_date{ width: 200px; }
+.row{ margin-top: 50px;}
 
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px;}
 .ui-timepicker-div dl { text-align: left; }

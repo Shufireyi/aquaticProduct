@@ -31,6 +31,9 @@
             <if test="facid != null">
                 and factoryid = ${facid}
             </if>
+            <if test="facid==1">
+                    and type LIKE '%_${suffix}'
+             </if>
             <if test="type != null and !&quot;&quot;.equals(type.trim())">
                 and type LIKE '%${type}%'
             </if>
@@ -40,6 +43,98 @@
             </if>
         </where>
         order by id
+    </select>
+
+    <select id="queryIntegration" parameterType="com.fire.entity.HistoryDateUtil" resultType="com.fire.pojo.ShuichanData">
+        SELECT * FROM IntegrationData
+        <where>
+            <if test="comid != null">
+                and companyid = ${comid}
+            </if>
+            <if test="facid != null">
+                and factoryid = ${facid}
+            </if>
+            <if test="facid==1">
+                and type LIKE '%_${suffix}'
+            </if>
+            <if test="type != null and !&quot;&quot;.equals(type.trim())">
+                and type LIKE '%${type}%'
+            </if>
+            <if test="startTime != null and !&quot;&quot;.equals(startTime.trim())
+                and endTime != null and !&quot;&quot;.equals(endTime.trim())">
+                and time BETWEEN '${startTime}' AND '${endTime}'
+            </if>
+        </where>
+        order by id
+    </select>
+
+    <select id="queryCurrentPh" parameterType="com.fire.entity.HistoryDateUtil" resultType="com.fire.pojo.ShuichanData">
+      SELECT * from mqttai.ShuichanData WHERE
+        id=(
+        select max(id) from ShuichanData where companyid=${comid}
+        <if test="facid!=null">
+            AND factoryid=${facid}
+        </if>
+        <if test="facid==1">
+            AND type LIKE '%ph_${suffix}%'
+        </if>
+        AND ShuichanData.type like 'ph_%'
+        ORDER BY time
+        )
+    </select>
+    <select id="queryCurrentDo2" parameterType="com.fire.entity.HistoryDateUtil" resultType="com.fire.pojo.ShuichanData">
+        SELECT * from mqttai.ShuichanData WHERE
+        id=(
+        select max(id) FROM ShuichanData WHERE companyid=${comid}
+        <if test="facid!=null">
+            AND factoryid=${facid}
+        </if>
+        <if test="facid==1">
+            AND type LIKE '%do2_${suffix}%'
+        </if>
+        AND type LIKE 'do2_%'
+        ORDER BY time
+        )
+    </select>
+    <select id="queryCurrentWater" parameterType="com.fire.entity.HistoryDateUtil" resultType="com.fire.pojo.ShuichanData">
+        SELECT * from mqttai.shuichandata where
+        id=(
+        select max(id) FROM ShuichanData WHERE companyid=${comid}
+        <if test="facid!=null">
+            AND factoryid=${facid}
+        </if>
+        <if test="facid==1">
+            AND type LIKE '%water_temp_${suffix}%'
+        </if>
+        AND type LIKE 'water_temp_%'
+
+        ORDER BY time
+        )
+    </select>
+
+    <!--查询出一段时间的数据，用于对时间间隔短进行查询-->
+    <select id="queryAppointedTime" parameterType="com.fire.entity.HistoryDateUtil" resultType="com.fire.pojo.ShuichanData">
+        SELECT * FROM ShuichanData
+        <where>
+            <if test="comid != null">
+                and companyid = ${comid}
+            </if>
+            <if test="facid != null">
+                and factoryid = ${facid}
+            </if>
+            <if test="facid==1">
+                and type LIKE '%_${suffix}%'
+            </if>
+            <if test="type != null and !&quot;&quot;.equals(type.trim())">
+                and type LIKE '%${type}%'
+            </if>
+            <if test="startTime != null and !&quot;&quot;.equals(startTime.trim())
+                and endTime != null and !&quot;&quot;.equals(endTime.trim())">
+                and time BETWEEN '${startTime}' AND '${endTime}'
+            </if>
+        </where>
+        order by id
+
     </select>
 
 </mapper>

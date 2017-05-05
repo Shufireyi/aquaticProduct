@@ -28,4 +28,13 @@ public interface DataService {
      * 历史数据查询接口
      */
     List<ShuichanData> queryHistoryData(HistoryDateUtil historyDateUtil) throws Exception;
+
+    //查询汇聚表数据接口
+    List<ShuichanData> queryIntegration(HistoryDateUtil historyDateUtil)throws Exception;
+
+    //查询出当前最新的数据
+    List<ShuichanData> queryCurrentData(HistoryDateUtil historyDateUtil)throws Exception;
+
+    //查询出指定时间段的数据
+    List<ShuichanData> queryAppointedTime(HistoryDateUtil historyDateUtil)throws Exception;
 }

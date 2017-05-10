@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <title>智慧农业</title>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/animate.css"/>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        a link {
+            color: bisque;
+        }
+
+        body {
+            background: url(img/new_bg.jpg) no-repeat;
+            background-size: auto;
+            font-family: "微软雅黑";
+            background-attachment: fixed;
+        }
+
+        th {
+            width: 80px;
+            height: 40px;
+            background-color: azure;
+        }
+
+        /*span{margin-left: 400px;}*/
+        .imdiv {
+            margin: 80px 0 0 150px;
+        }
+
+        .imdiv1 {
+            width: 100%;
+            height: 32px;
+            font-size: large;
+            background-color: /* rgb(38,177,227)*/ rgba(36, 100, 212, 1);
+            border: 0px;
+            padding: 0px;
+            color: white;
+        }
+
+        .imdiv1 p {
+            margin-left: 300px;
+            line-height: 32px;
+        }
+
+        .imtr_th {
+            width: 150px;
+        }
+
+        .but {
+            background: skyblue;
+        }
+
+        .open_a {
+            margin-left: 200px;
+        }
+
+        .mydiv2 {
+            margin: 10px 0 0 30px;
+        }
+
+        .form-control {
+            width: 400px;
+            height: 30px;
+            border-radius: 10px;
+            margin-top: 10px;
+            background-color: white;
+            color: black;
+        }
+
+        /*.form-control_l {width: 125px;	height: 30px;	border-radius: 10px;	margin-top: 10px;	background-color: dimgray;	color: white;}*/
+        .modal-body {
+            margin-left: 20px;
+        }
+
+        .buttondiv {
+            margin: 40px 30px 0;
+            float: right;
+        }
+
+        .user {
+            position: absolute;
+            margin: -32px 0 0 1200px;
+            width: 150px;
+            height: 50px;
+        }
+
+        .user ul {
+            font-size: x-large;
+            text-align: center;
+        }
+
+        .user a, li {
+            width: 100px;
+            height: 30px;
+            background-color: rgba(36, 100, 200, 1);
+            border: 1px solid cornflowerblue;
+            text-align: center;
+            list-style: none;
+            cursor: pointer;
+        }
+
+        .user li:hover {
+            background-color: #1E90FF;
+        }
+
+        .user a, li:nth-child(2) {
+            visibility: hidden;
+            font-size: large;
+        }
+
+        .user a, li:nth-child(3) {
+            visibility: hidden;
+            font-size: large;
+        }
+
+        /*动画*/
+        .imtr_n th {
+            width: 100px;
+            height: 40px;
+            background-color: white;
+        }
+
+        .imtr_m th {
+            width: 100px;
+            height: 40px;
+            background-color: ivory;
+        }
+
+        .mydiv {
+            position: absolute;
+            top: 100px;
+            left: 500px;
+            width: 500px;
+            height: 250px;
+            background-color: rgba(38, 177, 227, 0.5);
+            border-radius: 10px;
+            -webkit-animation: flipInX 1s .2s ease both;
+            -moz-animation: flipInX 1s .2s ease both;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="imdiv1">
+    <p><span id="ee"><span>智慧农业</span>&nbsp;&nbsp;&nbsp;欢迎你，xxx！        </span></p>
+    <div class="user">
+        <ul id="user" onmousemove="visble()" onmouseout="invisable()">
+            <li>user</li>
+            <li onclick="editPasswd()">修改密码</li>
+            <li onclick="logout()">注销</li>
+        </ul>
+    </div>
+</div>
+<div class="imdiv" id="imdiv">
+    <div class="imdiv2">
+        <table class="imtable" id="imtable">
+            <tr class="imtr" id="imtr">
+                <th>塘口名称</th>
+                <th>经度</th>
+                <th>纬度</th>
+                <th>省</th>
+                <th>市</th>
+                <th>区</th>
+                <th>街道</th>
+                <th>鱼塘长度</th>
+                <th>鱼塘宽度</th>
+                <th>面积</th>
+                <th>深度</th>
+                <th>录入时间</th>
+                <th>修改时间</th>
+                <!--<th style="width: 200px;">操作</th>-->
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<div id="popDiv" class="mydiv" style="display: none;">
+    <h1>&nbsp;&nbsp;修改</h1>
+    <hr/>
+    <div class="mydiv2">
+        <div class="modal-body">
+            <div class="form-group" id="form-group">
+                <input type="text" class="form-control" name="pVideo" id="pVideo"
+                       placeholder="塘口摄像头序列号">
+            </div>
+            <div class="buttondiv">
+                <a id="save" href="javascript:editInfo()">保存</a>
+                <a href="javascript:closeDivFun()">关闭</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //用户名传值
+    var n = 0;
+    var thisURL = document.URL;
+    var getval = thisURL.split('?')[1];
+    if (getval != null) {
+        var showval = getval.split("=")[1];
+        document.getElementById('ee').innerHTML = "欢迎您，" + showval + "!";
+        document.getElementById("user").children[0].innerHTML = showval;
+    }
+    list();
+
+    function visble() {
+        document.getElementById("user").children[1].style.visibility = "visible";
+        document.getElementById("user").children[2].style.visibility = "visible";
+
+    }
+
+    function invisable() {
+        document.getElementById("user").children[1].style.visibility = "hidden";
+        document.getElementById("user").children[2].style.visibility = "hidden";
+    }
+
+    //弹出修改密码框
+    function editPasswd() {
+        var th = document.getElementById("pVideo");     //设置密码框内容
+        th.value = "";
+        th.placeholder = "输入新密码";
+        th.type = "password"
+        var th2 = document.getElementById("form-group");
+        var th = document.createElement("input");
+        th.placeholder = "再次输入密码";
+        th.className = "form-control";
+        th.id = "password";
+        th.type = "password"
+        th2.appendChild(th);
+
+        showDivFun();
+        bt_id = $(this).attr("id");
+        tr_id = "tr" + bt_id;
+        var tr = document.getElementById(tr_id);
+        document.getElementById("save").href = "javascript:editPasswordInfo()";
+    }
+
+    //请求修改密码
+    function editPasswordInfo() {
+        if ($('#pVideo').val() == "" || $('#password').val() == "") {
+            alert("密码不能为空！");
+        } else if ($('#pVideo').val() != $('#password').val()) {
+            alert("2次输入密码不同！");
+        } else {
+            $.ajax({
+                type: "post",
+                url: "/user/changePassword.action",
+                data: {
+                    userName: showval,
+                    newPassword: $('#password').val()
+                },
+                success: function (isNull) {
+                    if (isNull == "success") {
+                        alert("修改密码成功！");
+                    } else {
+                        alert("修改密码失败！");
+                    }
+                }
+            });
+        }
+    }
+    //注销
+    function logout() {
+        a = confirm("你确定要退出吗！");
+        if (a == true) {
+            $.ajax({
+                type: "post",
+                url: "/user/logout.action",
+                data: null,
+                success: function (isNull) {
+                    if (isNull == "success") {
+                        location.href = "index.html";
+                    } else {
+                        alert("注销失败!");
+                    }
+                }
+            });
+
+        }
+    }
+    //后端数据取出表格化处理
+    function list() {
+        $.ajax({
+            type: "post",
+            url: "/userCenter/queryPoundByUsername.action",
+            data: {
+                userName: showval
+            },
+            success: function (List) {
+
+//						var obj = List;
+//						var obj = [{"id":1,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
+//					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000},
+//					{"id":2,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
+//					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000}];
+                $.each(obj, function (index, item) {
+                    //测试用例
+//							var item = {"id":1,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000};
+                    var table = document.getElementById('imtable');
+                    var tr = document.createElement("tr");
+                    tr.className = "imtr_n";
+                    tid = item.id;
+
+                    tr.id = "tr" + tid;
+                    table.appendChild(tr);
+                    if ((n++) % 2 == 1) {                                          //隔行不同色,动画
+                        tr.className = "imtr_m";
+                        $('#' + "tr" + tid).addClass("animated bounceInLeft");
+                    } else {
+                        $('#' + "tr" + tid).addClass("animated bounceInRight");
+                        $('#' + "tr" + tid + " th").css("background-color", "ivory");
+                    }
+
+                    addth(item.poundName, tr);
+                    addth(item.longitude, tr);
+                    addth(item.latitude, tr);
+                    addth(item.province, tr);
+                    addth(item.city, tr);
+                    addth(item.country, tr);
+                    addth(item.address, tr);
+                    addth(item.poundLength, tr);
+                    addth(item.poundWidth, tr);
+                    addth(item.poundArea, tr);
+                    addth(item.poundDeep, tr);
+                    addth(getDateTime(new Date(item.createTime)), tr);
+                    addth(getDateTime(new Date(item.updateTime)), tr);
+                });
+
+            }
+        });
+    }
+
+    function showDivFun() {
+        $('#popDiv').slideDown();   //渐入
+        document.getElementById('popDiv').style.display = 'block';        //div显示
+        document.getElementById('imdiv').style.webkitFilter = "blur(4px)";   //模糊背景
+    }
+
+    function closeDivFun() {
+        $('#popDiv').slideUp();
+        document.getElementById('imdiv').style.webkitFilter = "blur(0px)";
+        location.reload();   //刷新页面
+    }
+
+
+    function addth(obj, tr) {
+        var th = document.createElement("th");
+        if (obj == "0") {
+            tr.appendChild(th);
+        } else {
+            th.innerHTML = obj;
+            tr.appendChild(th);
+        }
+    }
+
+    //增加按钮
+    function addinput(obj, tid, th) {
+        th.style.width = " 200px";
+        var input = document.createElement("input");
+        input.type = "button";
+        input.value = obj;
+        input.className = "but";
+        input.id = tid;
+        th.appendChild(input);
+        return th;
+    }
+
+    //转变时间戳
+    function getDateTime(date) {
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+
+        return year + "-" + month + "-" + day;
+    }
+
+    //修改摄像头序列号
+    function edit() {
+        document.getElementById("pVideo").value = "";
+        showDivFun();
+        bt_id = $(this).attr("id");
+        tr_id = "tr" + bt_id;
+        var tr = document.getElementById(tr_id);
+        document.getElementById("save").href = "javascript:editInfo(bt_id)";
+
+        document.getElementById("pVideo").value = tr.children[9].innerHTML;
+    }
+
+    //请求服务器
+    function editInfo(obj) {
+        $.ajax({
+            type: "post",
+            url: "user/addvedio.action",
+            data: {
+                pId: obj,
+                pVideo: $('#pVideo').val()
+            },
+            success: function (isNull) {
+                if (isNull == "success") {
+                    alert("修改成功");
+                } else {
+                    alert("修改失败");
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

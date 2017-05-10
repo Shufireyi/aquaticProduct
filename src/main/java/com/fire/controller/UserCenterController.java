@@ -19,11 +19,11 @@ public class UserCenterController {
     @Autowired
     private PoundService poundService;
 
-    @RequestMapping(value = "queryPoundByusername")
+    @RequestMapping(value = "queryPoundByUsername")
     public
     @ResponseBody
     List<Pound> queryPoundByuserName(String userName) throws Exception {
-       userName="chenliu";
+       //userName="chenliu";
         return poundService.queryPoundByUsername(userName);
     }
 }

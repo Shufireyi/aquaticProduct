@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="UTF-8">
+<head>
+<meta charset="UTF-8">
+<title>塘口信息录入</title>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/animate.css"/>
+<style>
+	* {margin:0px;padding:0px;}
+	a {text-decoration: none; color: black;}
+	body{background: url(img/new_bg.jpg) no-repeat;background-size:  auto; background-attachment:fixed}
+	th{width: 80px;height: 40px; background-color: azure;}
+	
+	.imdiv { margin:40px 0 0 100px;}
+	.imdiv1{width: 100%; height: 30px;font-size: large; background-color: rgb(36,100,212) ;color: white;}
+	.imdiv1 a{margin:0 0 0 200px;display: inline-block;line-height: 30px; width: 130px;height: 30px; background: rgb(36,80,212); color: white; text-align: center; border-radius: 5px;}
+	.imdiv1 a:hover{ background-color: #1E90FF;}
+	.imdiv2 { position: absolute; margin:40px 0 0 0px;}
+	/*去除table的内边框*/
+	/*.imtable { border-collapse: collapse;}*/
+	/*.imtr th:nth-child(10) { width: 150px;}
+	.imtr th:nth-child(10) { width: 150px;}*/
+	.but {background: skyblue;}
+	.but1 {background: red;}
+	.mydiv h1{margin: 20px 0 20px 20px;}
+	.mydiv2{margin-left: 30px;}
+	.form-control{width: 400px; height: 30px;border-radius: 10px;margin-top: 10px;background-color: white;}
+	.form-control_l{width: 90px; height: 30px;border-radius: 10px;margin-top: 10px;background-color: white;}
+	.modal-body{margin-left: 20px;}
+	.modal-body div:nth-child(2) input {width: 190px;}
+	.buttondiv{margin:40px 30px 0;float: right;}
+	#search { margin-left: 250px;width: 120px;color: black; padding-right:20px; background:url(img/search.png) no-repeat scroll right center transparent; background-size: 20px 20px;}
+	#search_img {position: absolute; margin: 1px 0 0 20px;cursor: pointer;}
+
+	/*动画*/
+	.imtr_n th {width: 80px;height: 40px; background-color:beige;-webkit-animation:bounceInLeft 1s .2s ease both;-moz-animation:bounceInLeft 1s .2s ease both;}
+	.imtr_m th {width: 80px;height: 40px; background-color:ivory;-webkit-animation:bounceInRight 1s .2s ease both;-moz-animation:bounceInRight 1s .2s ease both;}
+	
+	.mydiv{visibility: visible; position: absolute; top: 100px; left: 500px; width: 500px; height: 500px; background-color: rgba(38,177,227,0.7);border-radius: 10px;-webkit-animation:flipInX 1s .2s ease both; -moz-animation:flipInX 1s .2s ease both;}
+	.mydiv_l{visibility: hidden;position: absolute; top: 100px; left: 500px; width: 500px; height: 500px; background-color: rgba(38,177,227,0.7);border-radius: 10px;}
+
+</style>
+
+</head>
+<body>
+	
+	<div class="imdiv1" >
+		<nobr>
+			<div>
+				<span>塘口信息录入</span>
+				<a href="javascript:showDivFun()" >添加塘口信息</a>
+				<a href="userinfo.html" >添加用户信息</a>
+				<input type="text" id="search" placeholder="查询塘口名称" onkeypress="if (event.keyCode == 13) query();"/>
+				<a href="javascript:logout()">注销</a>
+			</div>
+		</nobr>
+	</div>
+	
+	<div class="imdiv" id="imdiv" > 
+			<div class="imdiv2">
+				<table class="imtable" id="imtable">
+					<thead>
+						<tr class="imtr" id="imtr">
+							<th>塘口名称</th>
+							<th>经度</th>
+							<th>纬度</th>
+							<th>省</th>
+							<th>市</th>
+							<th>区</th>
+							<th>街道</th>
+							<th>鱼塘长度</th>
+							<th>鱼塘宽度</th>						
+							<th>面积</th>
+							<th>深度</th>
+							<th>所属用户</th>
+							<th>录入时间</th>
+							<th>修改时间</th>
+							<th style="width: 200px;">操作</th>
+						</tr>
+					</thead>
+					<tbody id="tb"></tbody>
+				</table>
+			</div>
+		</div>
+		
+		
+		
+		
+<!--录入表信息-->
+	<div id="popDiv" class="mydiv_l">
+		<h1>新增</h1>
+			<hr />
+			<div class="mydiv2">
+		    <div class="modal-body" id="modal-body">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="poundName" id="poundName" placeholder="塘口名称">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="latitude" id="latitude"  placeholder="纬度">
+                    <input type="text" class="form-control" name="longitude" id="longitude" placeholder="经度">
+                </div>
+                <div class="form-group">
+                	<select id="province" name="province" class="form-control_l" runat="server" onchange="selectprovince(this);" >
+                		<option value='' id="oprovince" disabled selected style='display:none;'>省</option>
+                	</select>
+					<select id="city" name="city" class="form-control_l" runat="server" >
+						<option value='' id="ocity" disabled selected style='display:none;'>市</option>
+					</select>
+					<script type="text/javascript" src="js/location.js"></script>
+                    <input type="text" class="form-control_l" name="conuntry" id="country" placeholder="区">
+                    <input type="text" class="form-control_l" name="address" id="address" placeholder="街道">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control_l" name="poundLength" id="poundLength" placeholder="鱼塘长度">
+                    <input type="text" class="form-control_l" name="poundWidth" id="poundWidth" placeholder="鱼塘宽度">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="poundArea" id="poundArea" placeholder="面积（若为不规则，可不填长宽）">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="poundDeep" id="poundDeep" placeholder="深度">
+                </div>
+                <!--<div class="form-group">
+                    <input type="text" class="form-control" name="pVideo" id="pVideo" placeholder="塘口摄像头序列号">
+                </div>-->
+                <div class="form-group">
+                    <input type="text" class="form-control" name="userName" id="userName" placeholder="所属用户">
+                </div>
+                <div class="buttondiv">
+	                <a id="save" href="javascript:save()">保存</a>
+	                <a  href="javascript:closeDivFun()">关闭</a>
+                </div>
+            </div>
+            </div>
+		
+		
+		
+		</div>
+	<script>
+			var n = 1;
+			var thisURL = document.URL;
+			var info = ["poundName","longitude","latitude","province","city","country","address","poundLength","poundWidth","poundArea","poundDeep","userName","createTime","updateTime"];
+			var rinfo = ["塘口名称","经度","纬度","省","市","区","街道","鱼塘长度","鱼塘宽度","面积","深度","所属用户"];
+			var datainfo = {pondname:null,longitude:null,latitude:null,province:null,city:null,contry:null,address:null,poundLength:null,pondWidth:null,poundArea:null,poundDeep:null,userName:null};
+			
+			var getval = thisURL.split('?')[1];                      //接受用户名和用户ID
+//			var getval = 1;    //测试
+			if(getval != null){                        
+				var showval = getval.split("=")[1];
+				var showval2= getval.split("=")[2];
+				var parent = document.getElementById('imtr');
+				parent.removeChild(parent.children[11]);
+				userList(showval2);
+				$('#imtr>th:eq(11)').hide();
+				$('#modal-body div:eq(6)').hide();
+				userList("showval2");
+				$('#tb tr').find("th:eq(11)").hide();
+			}else{
+				list(null);
+			}	
+			
+			//显示新增界面
+			function showDivFun(){
+				$(".mydiv>h1").html("新增");
+				document.getElementById("save").href="javascript:save()";
+				$('#popDiv').attr("class","mydiv");
+			    document.getElementById('imdiv').style.webkitFilter="blur(4px)";   //模糊背景
+			    for(var j=0;j<11;j++){
+			    	if(i!=4){
+					document.getElementById(info[j]).value="";
+					}else{
+						document.getElementById('ocity').checked = true;
+					}
+			    }
+			}
+			
+			//关闭新增界面
+			function closeDivFun(){
+		    	$('#popDiv').attr("class","mydiv_l");
+			    document.getElementById('imdiv').style.webkitFilter="blur(0px)";
+			    location.reload();   //刷新页面  
+			}
+			
+			//添加鱼塘
+			function save(){
+				var arg = [];                                                    //判断数据是否填入
+				for(var j=0;j<12;j++){
+					if( j == 11){
+						continue;
+					}
+					if(document.getElementById(info[j]).value == ""){
+						if(j == 7){
+							if(document.getElementById(info[9]).value == ""){
+								arg.push(rinfo[j]);
+							}
+						}else if(j == 8){
+							if(document.getElementById(info[7]).value != ""){
+								arg.push(rinfo[j]);
+							}
+						}else if(j == 9){
+							if(document.getElementById(info[7]).value == "" ||
+							document.getElementById(info[8]).value == ""){
+								arg.push(rinfo[j]);
+							}
+						}else{
+							arg.push(rinfo[j]);
+						}
+					}
+				}
+				if(arg != ""){
+					alert(arg+",未填写");
+				}else{
+					for(var i=0;i<11;i++){
+						datainfo[info[i]] = $('#'+info[i]).val();
+					}
+					if(getval != null){
+						datainfo[info[11]] = showval2;
+					}
+					$.ajax({
+						type:"post",
+						url:"/adm/addPound.action",
+						data:datainfo,
+						success:function(isNull){
+							result(isNull,"添加");
+							}
+					});
+					for(var j=0;j<12;j++){
+						document.getElementById(info[j]).value="";
+					}
+				}
+			}
+
+			//修改按钮
+			function edit(obj){
+				showDivFun();
+				tr_id = $(obj).parents('tr').attr("id")
+				var tr = document.getElementById(tr_id);
+				document.getElementById("save").href = "javascript:editInfo(tr_id)";
+				$(".mydiv>h1").html("修改");
+				for(var i=0;i<12;i++){
+					if(i!=4 && i!=3){
+						document.getElementById(info[i]).value = tr.children[i].innerHTML;
+					}else{
+						if(i == 3){
+							var cit = document.getElementById('oprovince');
+						}else{
+							var cit = document.getElementById('ocity');
+						}
+						cit.innerHTML = tr.children[i].innerHTML;
+						cit.value = tr.children[i].innerHTML;
+						cit.selected = true;
+					}
+				}			
+			}
+			
+			function editInfo(obj){
+				for(var i=0;i<12;i++){
+					datainfo[info[i]] = $('#'+info[i]).val();
+				}
+				datainfo.id = obj;
+				$.ajax({
+					type:"post",
+					url:"/adm/updatePound.action",
+					data:datainfo,
+					success:function(isNull){
+						result(isNull,"修改");
+					}
+				});
+			}
+			
+			//转让
+			function change(obj){
+				showDivFun();
+				tr_id = $(obj).parents('tr').attr("id")
+				var tr = document.getElementById(tr_id);
+				
+				document.getElementById("save").href="javascript:changeInfo(tr_id)";
+				$(".mydiv>h1").html("转让");
+				$('#popDiv').css("height","200px");
+				
+				var self = document.getElementById('modal-body');
+				if(getval == null){                                    //改变转让框内容
+					for(i=0;i<6;i++){
+						self.removeChild(self.children[0]);
+					}
+				}else{
+					for(i=0;i<6;i++){
+						self.removeChild(self.children[0]);
+					}
+					$('#modal-body div:eq(0)').show();
+				}
+				
+			}
+			
+			function changeInfo(obj){
+				var tr = document.getElementById(obj);
+				$.ajax({
+					type:"post",
+					url:"/adm/changeOwner.action",
+					data:{
+							userName:$('#userName').val(),						
+							id:obj
+					},
+					success:function(isNull){
+						result(isNull,"转让");
+					}
+				});				
+				
+			}
+			//删除
+			function del(obj){
+				var n = confirm("你确定要删除吗？");
+				if(n){
+					tr_id = $(obj).parents('tr').attr("id")
+					$.ajax({
+					type:"post",
+					url:"/adm/deletePound.action",
+					data:{ id:tr_id },
+					success:function(isNull){
+							result(isNull,"删除");
+						}
+					});	
+				}	
+			}
+
+			//查找
+			function query(){
+				var self = document.getElementById('imtable');
+				for(var i=1;self.children[i];){
+					self.removeChild(self.children[i]);
+				}
+				var poundName = document.getElementById('search').value;
+				list(poundName);
+			}
+
+			//查询所有塘口信息
+			function list(obj){
+				$.ajax({
+					type:"post",
+					url:"adm/queryPound.action",
+					data:{ poundName:obj },
+					success:function(List){
+					//测试用例
+//					var List = [{"id":1,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
+//					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000},
+//					{"id":2,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
+//					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000}];
+					callback(List);
+					}
+				});
+			}
+			
+			//对应用户所属塘口信息
+			function userList(obj){
+				$('.imdiv>span').html(obj+"塘口信息录入");
+				$.ajax({
+					type:"post",
+					url:"/userCenter/queryPoundByUsername.action",
+					data:{ userName:obj },
+					success:function(List){
+						
+//					var List = [{"id":1,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
+//					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000},
+//					{"id":2,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
+//					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000}];
+						callback(List);
+					}
+				});
+			}
+			
+			//查询返回数据处理
+			function callback(obj){
+				$.each(obj,function(index,item){
+					var $tr = $('#tb');
+					var html = "";
+					item.createTime = getDateTime(new Date(item.createTime));
+					item.updateTime = getDateTime(new Date(item.updateTime));
+					for(var i=0;i<14;i++){                                     //添加表单
+						if(item[info[i]] == null){item[info[i]] = "";}
+						html += "<th>"+item[info[i]]+"</th>";
+					}
+					th_input = "<th style='width: 150px;'><button onclick='edit(this)' class='but'>修改</button><button onclick='del(this)' class='but1'>删除</button><button onclick='change(this)' class='but'>转让鱼塘</button></th>";
+					html = "<tr id="+item.id+">"+html+th_input+"</tr>";
+					$('#tb').append(html);
+					if((n++)%2 == 1){                                          //隔行不同色,动画
+						$('#'+item.id).attr("class","imtr_n");
+					}else{
+						$('#'+item.id).attr("class","imtr_m");
+					}
+				});
+			}
+			
+			//返回执行结果
+			function result(obj,data){
+				if(obj == "success"){
+					alert(data+"成功!");
+				}else{
+					alert(data+"失败!");
+				}
+			}
+			
+			//转换时间戳
+			function getDateTime(date) {
+			    var year = date.getFullYear();
+			    var month = date.getMonth() + 1;
+			    var day = date.getDate();
+			    return year + "-" + month + "-" + day; 
+			}
+
+			function logout(){
+				a=confirm("你确定要退出吗！");
+				if(a == true){
+					$.ajax({
+						type:"post",
+						url:"/user/logout.action",
+						data:null,
+						success:function(isNull){
+							if(isNull == "success"){
+								location.href = "index.html";	
+							}else{
+								alert("注销失败!");
+							}
+						}
+					});
+				}
+			}
+
+		</script>
+ </body>	
+</html>

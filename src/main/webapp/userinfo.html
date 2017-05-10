@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="UTF-8">
+<head>
+<meta charset="UTF-8">
+<title>用户信息录入</title>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" href="css/animate.css" />
+<style>
+		* {margin:0px;padding:0px;}
+		a {text-decoration: none; color:black;}
+		a link {color: bisque;}	
+		body{background: url(img/new_bg.jpg) no-repeat;background-size: auto; background-attachment:fixed}
+
+		.but { background: skyblue;}
+		.but1 {background: red;}
+		.imtr th{width: 120px;height: 40px; background-color: azure;}
+		.imdiv { margin:40px 0 0 50px; position: relative;}
+		.imdiv1{width: 100%; height: 30px; font-size: large; background-color: rgb(36,100,212) ;border: 0px;padding: 0px;color: white;}
+		.imdiv1 a{margin-left: 200px;display: inline-block;line-height: 30px; width: 130px;height: 30px; background: rgb(36,80,212); color: white; text-align: center; border-radius: 5px;}
+		.imdiv1 a:hover{ background-color: #1E90FF;}		
+		.imdiv2{margin:40px 0 0 50px;position: absolute;}
+		.mydiv h1{margin: 20px 0 20px 20px;}
+		.mydiv_l h1{margin: 20px 0 20px 20px;}		
+		.mydiv2{margin-left: 30px;}
+		.form-control{width: 400px; height: 30px;border-radius: 10px;margin-top: 10px;background-color: white;}
+		.modal-body{margin-left: 20px;}
+		.buttondiv{margin:40px 30px 0;float: right;}
+		#search {margin-left: 250px;width: 120px;color: black; padding-right:20px;background:url(img/search.png) no-repeat scroll right center transparent; background-size: 20px 20px;}
+		#search_img {position: absolute; margin: 1px 0 0 20px;cursor: pointer;}
+
+		/*动画*/
+		.imtr_m th {width: 120px;height: 40px; background-color:ivory;-webkit-animation:bounceInLeft 1s .2s ease both;-moz-animation:bounceInLeft 1s .2s ease both;}
+		.imtr_n th {width: 120px;height: 40px; background-color:beige;-webkit-animation:bounceInRight 1s .2s ease both;-moz-animation:bounceInRight 1s .2s ease both;}
+		@-webkit-keyframes bounceInLeft{ 0%{opacity:0; -webkit-transform:translateX(-2000px)} 60%{opacity:1; -webkit-transform:translateX(30px)} 80%{-webkit-transform:translateX(-10px)} 100%{-webkit-transform:translateX(0)} }
+		@-moz-keyframes bounceInLeft{ 0%{opacity:0; -moz-transform:translateX(-2000px)} 60%{opacity:1; -moz-transform:translateX(30px)} 80%{-moz-transform:translateX(-10px)} 100%{-moz-transform:translateX(0)} }
+		
+		@-webkit-keyframes flipOutX{ 0%{-webkit-transform:perspective(400px) rotateX(0deg); opacity:1} 100%{-webkit-transform:perspective(400px) rotateX(90deg); opacity:0} }
+		@-moz-keyframes flipOutX{ 0%{-moz-transform:perspective(400px) rotateX(0deg); opacity:1} 100%{-moz-transform:perspective(400px) rotateX(90deg); opacity:0} }
+
+		@-webkit-keyframes flipInX{ 0%{-webkit-transform:perspective(400px) rotateX(90deg); opacity:0} 40%{-webkit-transform:perspective(400px) rotateX(-10deg)} 70%{-webkit-transform:perspective(400px) rotateX(10deg)} 100%{-webkit-transform:perspective(400px) rotateX(0deg); opacity:1} }
+		@-moz-keyframes flipInX{ 0%{-moz-transform:perspective(400px) rotateX(90deg); opacity:0} 40%{-moz-transform:perspective(400px) rotateX(-10deg)} 70%{-moz-transform:perspective(400px) rotateX(10deg)} 100%{-moz-transform:perspective(400px) rotateX(0deg); opacity:1} }
+		.mydiv{display:block; position: absolute; top: 100px; left: 500px; width: 500px; height: 450px; background-color: rgba(38,177,227,0.7);border-radius: 10px;-webkit-animation:flipInX 1s .2s ease both; -moz-animation:flipInX 1s .2s ease both;}
+		.mydiv_l{display:none; position: absolute; top: 100px; left: 500px; width: 500px; height: 450px; background-color: rgba(38,177,227,0.7);border-radius: 10px;}
+
+</style>
+
+</head>
+
+	<div class="imdiv1" >
+		<nobr>
+			<div>
+				<span>用户信息录入</span>
+				<a href="javascript:showDivFun()" >添加用户信息</a>
+				<a href="portinfo.html" >添加塘口信息</a>
+				<input type="text" id="search" placeholder="查询用户真实姓名" onkeypress="if (event.keyCode == 13) query();"/>
+				<a href="javascript:logout()">注销</a>
+			</div>
+		</nobr>
+	</div>
+	
+	<div class="imdiv" id="imdiv" > 
+			<div class="imdiv2">
+				<table class="imtable" id="imtable">
+					<tr class="imtr" id="imtr">
+						<th>用户名</th>
+						<th>密码</th>
+						<th>用户真实姓名</th>
+						<th>所属单位</th>
+						<th>联系电话</th>
+						<th>邮箱地址</th>
+						<th>是否为管理员</th>
+						<th>本次登录时间</th>
+						<th>上次登录时间</th>
+						<th>总计登陆次数</th>
+						<th style="width: 200px;">操作</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		
+		
+		
+<!--录入信息-->
+	<div id="popDiv" class="mydiv_l">
+			<h1>新增</h1><hr />
+			<div class="mydiv2">
+		    <div class="modal-body" >
+                <div class="form-group">
+                    <input type="text" class="form-control" name="userName" id="userName" placeholder="用户名称">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="password" id="password" placeholder="密码">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="personName" id="personName" placeholder="用户真实姓名">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="factoryName" id="factoryName" placeholder="所属单位">
+                </div>                
+                <div class="form-group">
+                    <input type="text" class="form-control" name="tel" id="tel" placeholder="联系电话">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="email" id="email" placeholder="邮箱地址">
+                </div>
+                <div class="buttondiv">
+	                <a id="saveuser" href="javascript:save(1)">添加用户</a>
+	                <a id="saveroot" href="javascript:save(0)">添加管理员</a>
+	                <a  href="javascript:closeDivFun()">关闭</a>
+                </div>
+            </div>
+            </div>		
+		</div>
+
+	<script>
+		var info = ["userName","password","personName","factoryName","tel","email"];
+		var rinfo = ["用户名","密码","真实姓名","所属单位","联系电话","邮箱地址"];
+		var datainfo = {userName:null,password:null,personName:null,factoryName:null,tel:null,email:null};
+		var n = 1;
+		list();
+		function list(){
+			ajax(null);					
+		}
+				
+		//弹出调用的方法
+		function showDivFun(){
+			$('#popDiv').slideDown();
+			document.getElementById("saveuser").href="javascript:save(1)";
+			document.getElementById("saveroot").href="javascript:save(0)";
+
+			for(var i=0;i<6;i++){
+				document.getElementById(info[i]).value="";
+			}
+		    $('#popDiv').attr("class","mydiv");
+		    document.getElementById('imdiv').style.webkitFilter="blur(4px)";
+		}
+		
+		//关闭事件
+		function closeDivFun(){
+		    $('#popDiv').attr("class","mydiv_l");
+		    document.getElementById('imdiv').style.webkitFilter="blur(0px)";
+		    location.reload();
+		}
+		
+		
+		function save(flag){
+			var arg = []
+			for(var j=0;j<6;j++){
+				if(document.getElementById(info[j]).value == ""){
+					arg.push(rinfo[j]);
+				}
+			}
+			if(arg != ""){
+				alert(arg+",未填写");
+			}else{
+				for(var i=0;i<6;i++){
+					datainfo[info[i]] = $('#'+info[i]).val();
+				}
+				datainfo.power = flag;
+				$.ajax({
+					type:"post",
+					url:"/user/register.action",
+					data:datainfo,
+					success:function(isNull){
+						if(isNull == "success"){
+								alert("添加成功");
+						}else{
+								alert("添加失败");
+						}
+					}
+				});
+
+				for(var j=0;j<6;j++){
+					document.getElementById(info[j]).value="";
+				}
+			}
+		}
+		
+		
+		//增加th节点
+		function addth(obj,tr){
+			var th = document.createElement("th");
+			th.innerHTML=obj;
+			tr.appendChild(th);
+		}
+		
+		//增加按钮
+		function addinput(obj,tid,th){
+			th.style.width=" 200px";
+			var input = document.createElement("input");
+			input.type = "button";
+			if(obj == "删除"){
+				input.className = "but1";
+			}else{
+				input.className = "but";
+			}
+			input.value = obj;
+			input.id=tid;
+			th.appendChild(input);
+			return th;
+		}
+		
+		
+		//修改按钮
+		function edit(){
+			showDivFun();
+			bt_id=$(this).attr("id");
+			tr_id="tr"+bt_id;
+			var tr = document.getElementById(tr_id);
+			$(".mydiv2>h1").html("修改");
+			$('#saveuser').html("保存用户");
+			$('#saveroot').html("保存管理员");
+			
+			document.getElementById("saveuser").href="javascript:editInfo(bt_id)";			
+			document.getElementById("saveroot").href="javascript:editInfo(bt_id)";			
+			for(var i=0;i<6;i++){
+				document.getElementById(info[i]).value = tr.children[i].innerHTML;
+			}	
+		}		
+		//修改保存按钮
+		function editInfo(obj){	
+			for(var i=0;i<6;i++){
+				datainfo[info[i]] = $('#'+info[i]).val();
+			}
+			datainfo.power = typeChange(document.getElementById("tr"+obj).children[6].innerHTML); 
+			datainfo.id = obj;
+			$.ajax({
+				type:"post",
+				url:"/adm/updateUser.action",
+				data:datainfo,
+				success:function(isNull){
+					if(isNull == "success"){
+							alert("修改成功");
+					}else{
+							alert("修改失败");
+					}
+				}
+			});
+		}
+
+		//删除
+		function del(){
+			var n = confirm("你确定要删除吗？");
+			if(n){
+				bt_id = $(this).attr("id");
+				$.ajax({
+				type:"post",
+				url:"/adm/deleteUser.action",
+				data:{
+					id:bt_id
+				},
+				success:function(isNull){
+					if(isNull == "success"){
+							alert("删除成功");
+							location.reload();
+					}else{
+							alert("删除失败");
+					}
+				}
+			});	
+			}
+		}
+		
+		
+		//增加鱼塘
+		function ln(){
+			bt_id = $(this).attr("id");
+			tr_id = "tr"+bt_id;
+			userName = document.getElementById(tr_id).children[0].innerHTML;
+			window.location.href="portinfo.html?userid="+bt_id+"="+userName;
+		}
+		
+		function query(){         	
+			var self = document.getElementById('imtable');
+			for(var i=1;self.children[i];){
+				self.removeChild(self.children[i]);
+			}
+			
+			var rname = document.getElementById('search').value;
+			ajax(rname);
+		}
+		
+		function ajax(obj){
+				$.ajax({
+				type:"post",
+				url:"/adm/queryUser.action",
+				data:{
+					personName:obj
+				},
+				success:function(List){
+					//测试用例
+//					var obj = [{"id":1,"userName":"aaaa","password":"dddd","personName":"","power":0,"tel":null,"email":"p@12.com","enterpriseName":null,"createTime":"2016-11-27 19:51:04.0","loginTime":null,"lastLoginTime":null,"count":0},
+//						{"id":1,"userName":"aaaa","password":"dddd","personName":"","power":0,"tel":null,"email":"p@12.com","enterpriseName":null,"createTime":"2016-11-27 19:51:04.0","loginTime":null,"lastLoginTime":null,"count":0}];
+					$.each(List,function(index,item){
+						var table = document.getElementById('imtable');
+						var tr = document.createElement("tr");
+						
+						if((n++)%2 == 1){                     //隔行不同色
+							tr.className="imtr_n"; 
+						}else{
+							tr.className="imtr_m";
+						}
+						
+						tid=item.id;
+						tr.id="tr"+tid;
+						table.appendChild(tr);
+						
+						for(var i=0;i<6;i++){
+							if(item[info[i]] == null){
+								item[info[i]] = "无";
+							}
+							addth(item[info[i]],tr)
+						}
+						addth(typeChange(item.power),tr);
+						
+						if(item.loginTime != null){
+							var date = new Date(parseInt(item.loginTime,10));
+							addth(getDateTime(date),tr);
+						}else{
+							addth("未登录",tr);
+						}
+
+						if(item.lastLoginTime != null){
+							var date = new Date(parseInt(item.lastLoginTime,10));
+							addth(getDateTime(date),tr);
+						}else{
+							addth("未登录",tr);
+						}
+						addth(item.count,tr);
+						
+						var th = document.createElement("th");
+						th = addinput("修改",tid,th);
+						th.children[0].onclick=edit;
+						th = addinput("删除",tid,th);
+						th.children[1].onclick=del;
+						th = addinput("添加鱼塘",tid,th);
+						th.children[2].onclick=ln;
+						tr.appendChild(th);		
+						
+					});
+//					
+				}
+				});
+			}
+
+		function getDateTime(date) {
+		    var year = date.getFullYear();
+		    var month = date.getMonth() + 1;
+		    var day = date.getDate();
+
+		    return year + "-" + month + "-" + day; 
+		}
+
+		function logout(){
+			a=confirm("你确定要退出吗！");
+			if(a == true){
+				$.ajax({
+					type:"post",
+					url:"/user/logout.action",
+					data:null,
+					success:function(isNull){
+						if(isNull == "success"){
+						location.href = "index.html";	
+						}else{
+							alert("注销失败!");
+						}
+					}
+				});
+
+			}
+		}
+		
+		//类型转换
+		function typeChange(obj){
+			if(obj == "是"){
+				return 0;
+			}else if(obj == "否"){
+				return 1;
+			}else if(obj == 0){
+				return "是";
+			}else{
+				return "否";
+			}
+		}
+		
+		
+	</script>
+ </body>
+</html>

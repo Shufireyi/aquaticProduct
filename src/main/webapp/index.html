@@ -1,109 +1,175 @@
 <!doctype html>
 <html lang="UTF-8">
 <head>
-	<meta charset="UTF-8">
-		<title>智慧农业水产管理系统登录</title>
-		<script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
-		<style>
-			h1{margin-left: 50px;}
-			h2 {text-align: center;color: dodgerblue;}
-			input,div{padding: 0px;border: 0px;}
-			button{background-color: #4CAF50; margin: 0 0 15px -20px; font-weight: bold; width: 350px; height: 30px; color: white; border:0px; cursor: pointer;}
-			button:hover{background-color: #43A047;}
-			body{ background: url(img/index_bg.jpg) ;background-size: 2000px 800px; font-family: "微软雅黑";}
+    <meta charset="UTF-8">
+    <title>智慧农业水产管理系统登录</title>
+    <script src="js/jquery-3.1.1.min.js" type="text/javascript"></script>
+    <style>
+        h1 {
+            margin-left: 50px;
+        }
 
-			.mydiv{margin: 50px 0 0 50px;font-size: 0px;}
-			.mydiv div:nth-child(3){margin-top: 30px;}
-			#container{margin: 100px 0 0 550px;height: 300px;width: 400px; border-radius: 10px; background: rgba(255,255,255,0.2);}
-			#container div div input:nth-child(1){width: 50px;height: 30px; text-align: center; margin-bottom: 20px;background: brown;color: white;}
-			#container div div input:nth-child(2){width: 230px;height: 30px; margin-bottom: 20px;background-color: lightgray;}
-			#username{background: url(img/username.png) scroll center left no-repeat transparent;background-size: 30px 30px;padding-left: 30px;}
-			#password{background: url(img/password.png) scroll center left no-repeat transparent;background-size: 30px 30px;padding-left: 30px;}			
-		</style>
-	</head>
-	<body id="bg">
-		<h1>智慧农业水产管理系统</h1>
-		<div id="container">
-			<h2>用户登录</h2>			
-			<div class="mydiv">
-				<div>
-					<input type="text" name="" id="" value="用户名" disabled=""/>
-					<input type="text" name="username" id="username" value="" />
-				</div>
-				<div>
-					<input type="text" name="" id="" value="密码" disabled=""/>
-					<input type="text" name="password" id="password" value="" />
-				</div>
-				<div>
-					<button onclick="login()" >登录</button>
-					<button onclick="register()">注册</button>
-				</div>
-			</div>
-		</div>
-		
-		<script>
-			function userlogin(){
-				var usern = document.getElementById("username").value;
-				var passw = document.getElementById("password").value;
-				var stat = 1;
-				$.ajax({
-					type:"post",
-					url:"/user/checklogin.action",
-					data:{
-						userName:usern,
-						password:passw,
-						power:1
-					},
-					success:function(isNull){
-						if(isNull == "success"){
-							window.location.href = "usershow.html?username="+usern;
-						}else{
-							stat = 0;
-						}
-					}
-				});
-				if( stat ==0){
-					return false;
-				}
-			}
-			
-			function rootlogin(){
-				var usern = document.getElementById("username").value;
-				var passw = document.getElementById("password").value;
-				var stat = 1;
-				$.ajax({
-					type:"post",
-					url:"/user/checklogin.action",
-					data:{
-						userName:usern,
-						password:passw,
-						power:0
-					},
-					success:function(isNull){
-						if(isNull == "success"){
-							window.location.href = "userinfo.html";
-						}else{
-							stat = 0;
-						}
-					}
-				});
-				if(stat == 0){
-					return false;
-				}
-			}
-			
-			function login(){
-				var ret = rootlogin();
-				var ret2 = userlogin();
-				if(ret == false && ret2 == false){
-					alert("用户名或密码输入错误，请重新输入！");
-				}
-			}
-			
-			function register(){
-				location.href = "register.html";
-			}
-		</script>
-	</body>
+        h2 {
+            text-align: center;
+            color: dodgerblue;
+        }
+
+        input, div {
+            padding: 0px;
+            border: 0px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            margin: 0 0 15px -20px;
+            font-weight: bold;
+            width: 350px;
+            height: 30px;
+            color: white;
+            border: 0px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #43A047;
+        }
+
+        body {
+            background: url(img/index_bg.jpg);
+            background-size: 2000px 800px;
+            font-family: "微软雅黑";
+        }
+
+        .mydiv {
+            margin: 50px 0 0 50px;
+            font-size: 0px;
+        }
+
+        .mydiv div:nth-child(3) {
+            margin-top: 30px;
+        }
+
+        #container {
+            margin: 100px 0 0 550px;
+            height: 300px;
+            width: 400px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #container div div input:nth-child(1) {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            background: brown;
+            color: white;
+        }
+
+        #container div div input:nth-child(2) {
+            width: 230px;
+            height: 30px;
+            margin-bottom: 20px;
+            background-color: lightgray;
+        }
+
+        #username {
+            background: url(img/username.png) scroll center left no-repeat transparent;
+            background-size: 30px 30px;
+            padding-left: 30px;
+        }
+
+        #password {
+            background: url(img/password.png) scroll center left no-repeat transparent;
+            background-size: 30px 30px;
+            padding-left: 30px;
+        }
+    </style>
+</head>
+<body id="bg">
+<h1>智慧农业水产管理系统</h1>
+<div id="container">
+    <h2>用户登录</h2>
+    <div class="mydiv">
+        <div>
+            <input type="text" name="" value="用户名" disabled=""/>
+            <input type="text" name="username" id="username" value=""/>
+        </div>
+        <div>
+            <input type="text" name="" value="密码" disabled=""/>
+            <input type="password" name="password" id="password" value=""/>
+        </div>
+        <div>
+            <button onclick="login()">登录</button>
+            <button onclick="register()">注册</button>
+            `
+        </div>
+    </div>
+</div>
+
+<script>
+    function userlogin() {
+        var usern = document.getElementById("username").value;
+        var passw = document.getElementById("password").value;
+        var stat = 1;
+        $.ajax({
+            type: "post",
+            url: "/user/checklogin.action",
+            data: {
+                userName: usern,
+                password: passw,
+                power: 1
+            },
+            success: function (isNull) {
+                if (isNull == "success") {
+                    window.location.href = "usershow.html?username=" + usern;
+                } else {
+                    stat = 0;
+                }
+            }
+        });
+        if (stat == 0) {
+            return false;
+        }
+    }
+
+    function rootlogin() {
+        var usern = document.getElementById("username").value;
+        var passw = document.getElementById("password").value;
+        var stat = 1;
+        $.ajax({
+            type: "post",
+            url: "/user/checklogin.action",
+            data: {
+                userName: usern,
+                password: passw,
+                power: 0
+            },
+            success: function (isNull) {
+                if (isNull == "success") {
+                    window.location.href = "userinfo.html";
+                } else {
+                    stat = 0;
+                }
+            }
+        });
+        if (stat == 0) {
+            return false;
+        }
+    }
+
+    function login() {
+        var ret = rootlogin();
+        var ret2 = userlogin();
+        if (ret == false && ret2 == false) {
+            alert("用户名或密码输入错误，请重新输入！");
+        }
+    }
+
+    function register() {
+        location.href = "register.html";
+    }
+</script>
+</body>
 </html>
 

@@ -148,13 +148,13 @@
 			if(getval != null){                        
 				var showval = getval.split("=")[1];
 				var showval2= getval.split("=")[2];
-				var parent = document.getElementById('imtr');
-				parent.removeChild(parent.children[11]);
+//				var parent = document.getElementById('imtr');
+//				parent.removeChild(parent.children[11]);
 				userList(showval2);
 				$('#imtr>th:eq(11)').hide();
 				$('#modal-body div:eq(6)').hide();
-				userList("showval2");
-				$('#tb tr').find("th:eq(11)").hide();
+//				userList("showval2");
+//				$('#tb tr').find("th:eq(11)").hide();
 			}else{
 				list(null);
 			}	
@@ -364,7 +364,8 @@
 //					{"id":2,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
 //					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000}];
 						callback(List);
-					}
+                        $('#tb tr').find("th:eq(11)").hide();
+                    }
 				});
 			}
 			
@@ -373,8 +374,8 @@
 				$.each(obj,function(index,item){
 					var $tr = $('#tb');
 					var html = "";
-					item.createTime = getDateTime(new Date(item.createTime));
-					item.updateTime = getDateTime(new Date(item.updateTime));
+					item.createTime = getDateTime(new Date(item.createTime)*1000);
+					item.updateTime = getDateTime(new Date(item.updateTime)*1000);
 					for(var i=0;i<14;i++){                                     //添加表单
 						if(item[info[i]] == null){item[info[i]] = "";}
 						html += "<th>"+item[info[i]]+"</th>";

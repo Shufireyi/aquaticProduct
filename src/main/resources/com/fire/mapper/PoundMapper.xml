@@ -47,12 +47,12 @@
     </select>
     <select id="queryPoundByUserId" parameterType="int" resultMap="PoundMapping">
         SELECT *
-        FROM pond_info
+        FROM pound_info
         WHERE user_id=#{userId}
     </select>
 
     <insert id="addPound" parameterType="com.fire.pojo.Pound">
-        INSERT INTO pond_info(
+        INSERT INTO pound_info(
         id,pond_name,province,city,
         country,address,longitude,latitude,pond_length,
         pond_width,pond_deep,pond_area,person_name,user_name,
@@ -66,12 +66,12 @@
         )
     </insert>
     <delete id="deletePound" parameterType="Integer">
-        DELETE  FROM pond_info
+        DELETE FROM pound_info
         WHERE id=#{id}
     </delete>
 
     <update id="updatePound" parameterType="com.fire.pojo.Pound">
-        UPDATE pond_info
+        UPDATE pound_info
         <set>
             <if test="poundName!=null">
                 pond_name=#{poundName},
@@ -132,7 +132,7 @@
     </update>
 
     <update id="updatePoundOwner" parameterType="com.fire.pojo.Pound">
-        UPDATE pond_info
+        UPDATE pound_info
         <set>
             <if test="personName!=null">
                 person_name=#{personName},
@@ -156,9 +156,9 @@
         where id=#{id}
     </update>
 
-    <select id="queryPoundLikeName"  parameterType="String" resultMap="PoundMapping">
+    <select id="queryPoundLikeName" parameterType="String" resultMap="PoundMapping">
         SELECT *
-        FROM pond_info
+        FROM pound_info
         WHERE pond_name
         LIKE '%${value}%'
 
@@ -191,7 +191,5 @@
         DELETE FROM user
         WHERE id=#{id}
     </delete>
-
-
 
 </mapper>

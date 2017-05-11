@@ -300,7 +300,7 @@
             },
             success: function (List) {
 
-//						var obj = List;
+						var obj = List;
 //						var obj = [{"id":1,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
 //					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000},
 //					{"id":2,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
@@ -334,8 +334,8 @@
                     addth(item.poundWidth, tr);
                     addth(item.poundArea, tr);
                     addth(item.poundDeep, tr);
-                    addth(getDateTime(new Date(item.createTime)), tr);
-                    addth(getDateTime(new Date(item.updateTime)), tr);
+                    addth(getDateTime(new Date(item.createTime)*1000), tr);
+                    addth(getDateTime(new Date(item.updateTime)*1000), tr);
                 });
 
             }

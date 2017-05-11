@@ -1,7 +1,5 @@
 package com.fire.pojo;
 
-import java.util.Date;
-
 /**
  * Created by ZC
  * on 2017/4/6.
@@ -25,8 +23,8 @@ public class Pound {
     private String enterpriseName;
     private String tel;
     private String email;
-    private Date createTime;
-    private Date updateTime;
+    private String createTime;
+    private String updateTime;
 
     public int getId() {
         return id;
@@ -172,19 +170,19 @@ public class Pound {
         this.email = email;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 }

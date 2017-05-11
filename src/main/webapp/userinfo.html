@@ -96,7 +96,7 @@
                     <input type="text" class="form-control" name="personName" id="personName" placeholder="用户真实姓名">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="factoryName" id="factoryName" placeholder="所属单位">
+                    <input type="text" class="form-control" name="enterpriseName" id="enterpriseName" placeholder="所属单位">
                 </div>                
                 <div class="form-group">
                     <input type="text" class="form-control" name="tel" id="tel" placeholder="联系电话">
@@ -114,9 +114,9 @@
 		</div>
 
 	<script>
-		var info = ["userName","password","personName","factoryName","tel","email"];
+		var info = ["userName","password","personName","enterpriseName","tel","email"];
 		var rinfo = ["用户名","密码","真实姓名","所属单位","联系电话","邮箱地址"];
-		var datainfo = {userName:null,password:null,personName:null,factoryName:null,tel:null,email:null};
+		var datainfo = {userName:null,password:null,personName:null,enterpriseName:null,tel:null,email:null};
 		var n = 1;
 		list();
 		function list(){
@@ -315,15 +315,16 @@
 						addth(typeChange(item.power),tr);
 						
 						if(item.loginTime != null){
-							var date = new Date(parseInt(item.loginTime,10));
-							addth(getDateTime(date*1000),tr);
+//							var date = new Date(parseInt(item.loginTime,10)*1000);
+							addth(item.loginTime.split(" ")[0],tr);
 						}else{
 							addth("未登录",tr);
 						}
 
 						if(item.lastLoginTime != null){
-							var date = new Date(parseInt(item.lastLoginTime,10));
-							addth(getDateTime(date*1000),tr);
+//							var date = new Date(parseInt(item.lastLoginTime,10)*1000);
+//							addth(getDateTime(date),tr);
+                            addth(item.lastLoginTime.split(" ")[0],tr);
 						}else{
 							addth("未登录",tr);
 						}

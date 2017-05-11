@@ -39,9 +39,26 @@
         <result column="count" jdbcType="INTEGER" property="count"/>
     </resultMap>
     -->
+
+    <resultMap id="BaseResultMap2" type="com.fire.pojo.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="person_name" jdbcType="VARCHAR" property="personName"/>
+        <result column="power" jdbcType="INTEGER" property="power"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="enterprise_name" jdbcType="VARCHAR" property="enterpriseName"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="login_time" jdbcType="DATE" property="loginTime"/>
+        <result column="last_login_time" jdbcType="DATE" property="lastLoginTime"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+    </resultMap>
+
+
     <select id="findIdByUsername" parameterType="String" resultType="int">
         SELECT id
-        FROM user
+        FROM users
         WHERE user_name=#{userName}
 
     </select>
@@ -50,6 +67,7 @@
         FROM pound_info
         WHERE user_id=#{userId}
     </select>
+
 
     <insert id="addPound" parameterType="com.fire.pojo.Pound">
         INSERT INTO pound_info(
@@ -106,24 +124,6 @@
             <if test="poundArea!=null">
                 pond_area=#{poundArea},
             </if>
-            <if test="personName!=null">
-                person_name=#{personName},
-            </if>
-            <if test="userName!=null">
-                user_name=userName,
-            </if>
-            <if test="enterpriseName!=null">
-                enterprise_name=#{enterpriseName},
-            </if>
-            <if test="tel!=null">
-                tel=#{tel},
-            </if>
-            <if test="email!=null">
-                email=#{email},
-            </if>
-            <if test="createTime!=null">
-                create_time=#{createTime},
-            </if>
             <if test="updateTime!=null">
                 update_time=#{updateTime}
             </if>
@@ -166,29 +166,57 @@
 
     <select id="queryUser" resultMap="com.fire.mapper.UserMapper.BaseResultMap">
         SELECT *
-        FROM user
+        FROM users
     </select>
+
+    <update id="updateUser" parameterType="java.util.Map">
+        UPDATE users
+        <set>
+            <if test="user.userName!=null">
+                user_name=#{user.userName},
+            </if>
+            <if test="user.password!=null">
+                password=#{user.password},
+            </if>
+            <if test="user.tel!=null">
+                tel=#{user.tel},
+            </if>
+            <if test="user.email!=null">
+                email=#{user.email},
+            </if>
+            <if test="user.enterpriseName!=null">
+                enterprise_name=#{user.enterpriseName}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 
     <select id="queryUserByUserName" parameterType="String" resultMap="com.fire.mapper.UserMapper.BaseResultMap">
         SELECT *
-        FROM user
+        FROM users
         WHERE user_name=#{userName}
     </select>
 
+    <select id="findUserByUName" parameterType="String" resultMap="BaseResultMap2">
+        select *
+        FROM users
+        WHERE user_name=#{uname}
+    </select>
+
     <insert id="addUser" parameterType="com.fire.pojo.User">
-        INSERT INTO user(
-        id,user_name,password,person_name,power,tel,email,enterprise_name,
+        INSERT INTO users(
+        user_name,password,person_name,power,tel,email,enterprise_name,
         create_time,login_time,last_login_time,count
         )
         VALUES (
-        #{id},#{userName},#{password},#{personName},#{power},#{tel},
+        #{userName},#{password},#{personName},#{power},#{tel},
         #{email},#{enterpriseName},#{createTime},#{loginTime},#{lastLoginTime},
         #{count}
         )
     </insert>
 
     <delete id="deleteUserById" parameterType="Integer">
-        DELETE FROM user
+        DELETE FROM users
         WHERE id=#{id}
     </delete>
 

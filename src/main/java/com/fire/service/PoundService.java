@@ -18,6 +18,9 @@ public interface PoundService {
     //通过用户名查询出所拥有的的鱼塘
     List<Pound> queryPoundByUsername(String userName) throws Exception;
 
+    //根据用户名查询用户信息
+    User  findUserByUName(String uname) throws  Exception;
+
     //鱼塘的添加、删除、查询、修改
     void addPound(Pound pound) throws Exception;
 
@@ -35,6 +38,8 @@ public interface PoundService {
 
     void deleteUserById(Integer id)throws Exception;
 
+    //管理员更新用户信息
+    void  updateUser(int id, User user) throws  Exception;
 
-    public void changeOwner(Integer id, String userName)throws  Exception;
+   void changeOwner(Integer id, String userName)throws  Exception;
 }

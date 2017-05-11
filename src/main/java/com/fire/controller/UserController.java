@@ -35,10 +35,6 @@ public class UserController {
     public
     @ResponseBody
     String checkLogin(HttpSession session, User user) throws Exception {
-        //User user1 = new User();
-        //user1.setUserName("shufangyi");
-        //user1.setPassword("shufangyi");
-        //user1.setPower(1);
         User rs = userService.findUserByNameAndPassword(user);
         String isNull = "error";
         if (rs != null) {
@@ -62,7 +58,7 @@ public class UserController {
     String logout(HttpSession session) throws Exception {
         // 清除session
         session.invalidate();
-        String isNull="success";
+        String isNull = "success";
         return isNull;
     }
 
@@ -78,16 +74,6 @@ public class UserController {
         // 设置注册时间
         DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String nowTime = format1.format(new Date());
-
-        //User user1 = new User();
-        //user1.setUserName("shufangyi");
-        //user1.setPassword("shufangyi");
-        //user1.setPersonName("shufnagyi");
-        //user1.setPower(1);
-        //user1.setTel("13151562908");
-        //user1.setEmail("102338496@qq.com");
-        //user1.setEnterpriseName("南区10栋");
-        //user1.setCreateTime(nowTime);
         user.setCreateTime(nowTime);
         int rs = userService.register(user);
         String isNull = "error";
@@ -107,9 +93,6 @@ public class UserController {
     public
     @ResponseBody
     String changePassword(User user, String newPassword) throws Exception {
-        //User user1 = new User();
-        //user1.setUserName("shufangyi");
-        //String qwe = "qweqwe";
         int rs = userService.changePassword(user, newPassword);
         String isNull = "error";
         if (rs == 1) {

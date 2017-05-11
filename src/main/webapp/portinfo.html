@@ -374,8 +374,8 @@
 				$.each(obj,function(index,item){
 					var $tr = $('#tb');
 					var html = "";
-					item.createTime = getDateTime(new Date(item.createTime)*1000);
-					item.updateTime = getDateTime(new Date(item.updateTime)*1000);
+					item.createTime = getDateTime(new Date(item.createTime));
+					item.updateTime = getDateTime(new Date(item.updateTime));
 					for(var i=0;i<14;i++){                                     //添加表单
 						if(item[info[i]] == null){item[info[i]] = "";}
 						html += "<th>"+item[info[i]]+"</th>";

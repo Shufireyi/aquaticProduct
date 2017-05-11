@@ -8,11 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-/**
- * Created by ZC on 2017/4/6.
- */
 @Controller
 @RequestMapping(value = "/adm")
 public class AdmCenterController {
@@ -29,16 +29,51 @@ public class AdmCenterController {
         return poundService.queryUser();
     }
 
-    //改变鱼塘的所有权
-    @RequestMapping(value = "changeOwner")
+    //用户的添加删除
+    @RequestMapping(value = "addUser")
     public
     @ResponseBody
-    String changeOwner(Integer id, String userName) throws Exception {
+    String addUser(User user) throws Exception {
+        /*user.setUserName("zc");
+        user.setEmail("351133261@qq.com");
+        user.setEnterpriseName("jinlingkeji");
+        user.setPersonName("zhangcheng");
+        user.setTel("110");
+        user.setCount(1);
+        user.setPassword("123456");
+        user.setPower(1);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        poundService.changeOwner(id, userName);
+        user.setCreateTime(df.format(new Date()));
+        */
+        // 设置注册时间
+        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String nowTime = format1.format(new Date());
+        user.setCreateTime(nowTime);
+        poundService.addUser(user);
         String isNull = "success";
         return isNull;
+    }
 
+    @RequestMapping(value = "deleteUser")
+    public
+    @ResponseBody
+    String deleteUserById(Integer id) throws Exception {
+        //id = 11;
+        poundService.deleteUserById(id);
+        String isNull = "success";
+        return isNull;
+    }
+
+    //修改用户信息
+    @RequestMapping(value = "updateUser")
+    public
+    @ResponseBody
+    String updateUser(int id, User user) throws Exception {
+        String isNull = "error";
+        poundService.updateUser(id, user);
+        isNull = "success";
+        return isNull;
     }
 
 
@@ -47,20 +82,18 @@ public class AdmCenterController {
     public
     @ResponseBody
     String addPound(Pound pound) throws Exception {
-       /* pound.setProvince("222222南京");
-        pound.setCountry("000000ns");
-        pound.setPoundLength(300);
-        pound.setPoundDeep(30);
-        pound.setUserName("zhangsan");
-        pound.setTel("13111111111");
-        pound.setUserName("chenliu");
-        pound.setAddress("zhang");
-        pound.setCity("nanjing");
-        pound.setPoundName("ssr");
-        pound.setEmail("123@qq.com");
-        pound.setEnterpriseName("zc");
-        pound.setPoundArea(123455);
-        pound.setUserId(2);*/
+        String uname = pound.getUserName();
+        User nuser = poundService.findUserByUName(uname);
+        pound.setUserId(nuser.getId());
+        pound.setPersonName(nuser.getPersonName());
+        pound.setEnterpriseName(nuser.getEnterpriseName());
+        pound.setEmail(nuser.getEmail());
+        pound.setTel(nuser.getTel());
+        // 设置注册时间
+        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String nowTime = format1.format(new Date());
+        pound.setCreateTime(nowTime);
+
         poundService.addPound(pound);
         String isNull = "success";
         return isNull;
@@ -81,9 +114,6 @@ public class AdmCenterController {
     public
     @ResponseBody
     String updatePound(Pound pound) throws Exception {
-        /*pound.setId(118);
-        pound.setPoundName("urrr");
-        pound.setAddress("ssssssss");*/
         poundService.updatePound(pound);
         String isNull = "success";
         return isNull;
@@ -98,35 +128,12 @@ public class AdmCenterController {
         return poundService.queryPoundLikeName(poundName);
     }
 
-    //用户的添加删除
-    @RequestMapping(value = "addUser")
+    //改变鱼塘的所有权
+    @RequestMapping(value = "changeOwner")
     public
     @ResponseBody
-    String addUser(User user) throws Exception {
-        /*user.setUserName("zc");
-        user.setEmail("351133261@qq.com");
-        user.setEnterpriseName("jinlingkeji");
-        user.setPersonName("zhangcheng");
-        user.setTel("110");
-        user.setCount(1);
-        user.setPassword("123456");
-        user.setPower(1);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        user.setCreateTime(df.format(new Date()));
-        */
-
-        poundService.addUser(user);
-        String isNull = "success";
-        return isNull;
-    }
-
-    @RequestMapping(value = "deleteUser")
-    public
-    @ResponseBody
-    String deleteUserById(Integer id) throws Exception {
-        id = 11;
-        poundService.deleteUserById(id);
+    String changeOwner(Integer id, String userName) throws Exception {
+        poundService.changeOwner(id, userName);
         String isNull = "success";
         return isNull;
     }

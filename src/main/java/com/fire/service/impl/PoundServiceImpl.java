@@ -6,7 +6,12 @@ import com.fire.pojo.User;
 import com.fire.service.PoundService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ShuFire
@@ -34,6 +39,9 @@ public class PoundServiceImpl implements PoundService {
         return poundList;
     }
 
+    public User findUserByUName(String uname) throws Exception {
+        return poundMapper.findUserByUName(uname);
+    }
 
     public void addPound(Pound pound) throws Exception {
         poundMapper.addPound(pound);
@@ -44,6 +52,10 @@ public class PoundServiceImpl implements PoundService {
     }
 
     public void updatePound(Pound pound) throws Exception {
+        // 设置updateTime时间
+        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String nowTime = format1.format(new Date());
+        pound.setUpdateTime(nowTime);
         poundMapper.updatePound(pound);
     }
 
@@ -52,27 +64,34 @@ public class PoundServiceImpl implements PoundService {
     }
 
     //查询出所有的用户
-    public List<User> queryUser()throws Exception{
+    public List<User> queryUser() throws Exception {
         return poundMapper.queryUser();
 
     }
 
-    public void addUser(User user)throws  Exception{
+    public void addUser(User user) throws Exception {
         poundMapper.addUser(user);
     }
 
-    public void deleteUserById(Integer id)throws Exception{
+    public void deleteUserById(Integer id) throws Exception {
         poundMapper.deleteUserById(id);
     }
 
+    public void updateUser(int id, User user) throws Exception {
+        Map<String, Object> temp = new HashMap<>();
+        temp.put("id", id);
+        temp.put("user", user);
+        poundMapper.updateUser(temp);
+    }
+
     //通过username和鱼塘修改鱼塘的所有权
-    public void changeOwner(Integer id,String userName)throws Exception{
-        User user=poundMapper.queryUserByUserName(userName);
+    public void changeOwner(Integer id, String userName) throws Exception {
+        User  user = poundMapper.queryUserByUserName(userName);
         System.out.println(user.getEnterpriseName());
         System.out.println(user.getPersonName());
         System.out.println(user.getEmail());
         System.out.println(user.getUserName());
-        Pound pound=new Pound();
+        Pound pound = new Pound();
         pound.setId(id);
         pound.setEnterpriseName(user.getEnterpriseName());
         pound.setPersonName(user.getPersonName());

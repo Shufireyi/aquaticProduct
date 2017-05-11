@@ -141,7 +141,7 @@
 			var thisURL = document.URL;
 			var info = ["poundName","longitude","latitude","province","city","country","address","poundLength","poundWidth","poundArea","poundDeep","userName","createTime","updateTime"];
 			var rinfo = ["塘口名称","经度","纬度","省","市","区","街道","鱼塘长度","鱼塘宽度","面积","深度","所属用户"];
-			var datainfo = {pondname:null,longitude:null,latitude:null,province:null,city:null,contry:null,address:null,poundLength:null,pondWidth:null,poundArea:null,poundDeep:null,userName:null};
+			var datainfo = {poundName:null,longitude:null,latitude:null,province:null,city:null,country:null,address:null,poundLength:null,poundWidth:null,poundArea:null,poundDeep:null,userName:null};
 			
 			var getval = thisURL.split('?')[1];                      //接受用户名和用户ID
 //			var getval = 1;    //测试
@@ -189,19 +189,19 @@
 						continue;
 					}
 					if(document.getElementById(info[j]).value == ""){
-						if(j == 7){
-							if(document.getElementById(info[9]).value == ""){
-								arg.push(rinfo[j]);
+						if( j == 7 || j== 8 || j == 9){
+						    var ret1 = $('#'+info[7]).val() ? true : false;
+						    var ret2 = $('#'+info[8]).val() ? true : false;
+							var ret3 = $('#'+info[9]).val() ? true : false;
+							if(ret1 != ret2){
+							    arg.push(rinfo[j]);
+							    continue;
 							}
-						}else if(j == 8){
-							if(document.getElementById(info[7]).value != ""){
-								arg.push(rinfo[j]);
-							}
-						}else if(j == 9){
-							if(document.getElementById(info[7]).value == "" ||
-							document.getElementById(info[8]).value == ""){
-								arg.push(rinfo[j]);
-							}
+							if(ret1 && ret2 || ret3){
+							    continue;
+							}else {
+                                ret || ret2 ? console.log() : arg.push(rinfo[j]);
+                            }
 						}else{
 							arg.push(rinfo[j]);
 						}
@@ -238,9 +238,8 @@
 				document.getElementById("save").href = "javascript:editInfo(tr_id)";
 				$(".mydiv>h1").html("修改");
 				for(var i=0;i<12;i++){
-					if(i!=4 && i!=3){
-						document.getElementById(info[i]).value = tr.children[i].innerHTML;
-					}else{
+                    $('#'+info[i]).val(tr.children[i].innerHTML);
+					if(i==3 || i==4){
 						if(i == 3){
 							var cit = document.getElementById('oprovince');
 						}else{
@@ -255,9 +254,10 @@
 			
 			function editInfo(obj){
 				for(var i=0;i<12;i++){
-					datainfo[info[i]] = $('#'+info[i]).val();
+					datainfo[info[i]] = document.getElementById(info[i]).value;          //jquery不能取select的值
 				}
 				datainfo.id = obj;
+//				console.log(datainfo);
 				$.ajax({
 					type:"post",
 					url:"/adm/updatePound.action",
@@ -342,7 +342,7 @@
 					success:function(List){
 					//测试用例
 //					var List = [{"id":1,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
-//					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000},
+//					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":null,"updateTime":1489680000000},
 //					{"id":2,"poundName":"水域一","province":"120000天津","city":"120100天津市","country":"120101和平区","address":"东山街道","longitude":null,"latitude":null,"poundLength":20.0,"poundWidth":15.0,
 //					"poundDeep":5.0,"poundArea":3.0,"personName":"张三","userName":"zhangsan","userId":2,"enterpriseName":"金陵科技学院","tel":"13775552689","email":"123@163.com","createTime":1480867200000,"updateTime":1489680000000}];
 					callback(List);
@@ -374,8 +374,8 @@
 				$.each(obj,function(index,item){
 					var $tr = $('#tb');
 					var html = "";
-					item.createTime = getDateTime(new Date(item.createTime));
-					item.updateTime = getDateTime(new Date(item.updateTime));
+					item.createTime = item.createTime ? getDateTime(new Date(item.createTime)) : "无";
+					item.updateTime = item.updateTime ? getDateTime(new Date(item.updateTime)) : "无";
 					for(var i=0;i<14;i++){                                     //添加表单
 						if(item[info[i]] == null){item[info[i]] = "";}
 						html += "<th>"+item[info[i]]+"</th>";

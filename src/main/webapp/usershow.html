@@ -264,6 +264,7 @@
                 success: function (isNull) {
                     if (isNull == "success") {
                         alert("修改密码成功！");
+                        logoutCallback();
                     } else {
                         alert("修改密码失败！");
                     }
@@ -275,21 +276,25 @@
     function logout() {
         a = confirm("你确定要退出吗！");
         if (a == true) {
-            $.ajax({
-                type: "post",
-                url: "/user/logout.action",
-                data: null,
-                success: function (isNull) {
-                    if (isNull == "success") {
-                        location.href = "index.html";
-                    } else {
-                        alert("注销失败!");
-                    }
-                }
-            });
-
+            logoutCallback();
         }
     }
+    //注销请求
+    function logoutCallback() {
+        $.ajax({
+            type: "post",
+            url: "/user/logout.action",
+            data: null,
+            success: function (isNull) {
+                if (isNull == "success") {
+                    location.href = "index.html";
+                } else {
+                    alert("注销失败!");
+                }
+            }
+        });
+    }
+    
     //后端数据取出表格化处理
     function list() {
         $.ajax({
